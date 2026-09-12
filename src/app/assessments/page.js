@@ -4,23 +4,29 @@ import Link from 'next/link';
 import {
   Award, CheckCircle, HelpCircle, AlertCircle, Clock,
   BarChart2, FileText, ChevronRight, RefreshCw, Send, ShieldCheck,
-  TrendingUp, BookOpen, ExternalLink, ArrowRight, Check, X, Shield
+  TrendingUp, BookOpen, ExternalLink, ArrowRight, Check, X, Shield,
+  ChevronDown, Layers, Code
 } from 'lucide-react';
 
 export default function AssessmentsPage() {
   const [questions, setQuestions] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [history, setHistory] = useState([]);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [scoreResult, setScoreResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('take-exam'); // 'take-exam' | 'bank' | 'history'
+  const [selectedCourse, setSelectedCourse] = useState('COURSE_ALL');
+  const [courseDropdownOpen, setCourseDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/assessments')
+  const fetchAssessment = (courseId) => {
+    setLoading(true);
+    fetch(`/api/assessments?courseId=${courseId}`)
       .then(r => r.json())
       .then(d => {
         setQuestions(d.questions || []);
+        setCourses(d.courses || []);
         setHistory(d.history || []);
         setLoading(false);
       })
@@ -28,7 +34,23 @@ export default function AssessmentsPage() {
         console.error(err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchAssessment(selectedCourse);
   }, []);
+
+  const handleCourseChange = (courseId) => {
+    setSelectedCourse(courseId);
+    setCourseDropdownOpen(false);
+    setAnswers({});
+    setSubmitted(false);
+    setScoreResult(null);
+    fetchAssessment(courseId);
+  };
+
+  const activeCourse = courses.find(c => c.id === selectedCourse) || courses[0] || {};
+
 
   const handleSingleSelect = (qid, index) => {
     if (submitted) return;
@@ -55,7 +77,7 @@ export default function AssessmentsPage() {
       const res = await fetch('/api/assessments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: 'USR001', answers })
+        body: JSON.stringify({ userId: 'USR001', answers, courseId: selectedCourse })
       });
       const data = await res.json();
       setScoreResult(data);
@@ -143,6 +165,111 @@ export default function AssessmentsPage() {
       {/* ======================================================== */}
       {activeTab === 'take-exam' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* Course Selector */}
+          <div style={{ position: 'relative' }}>
+            <button
+              onClick={() => setCourseDropdownOpen(!courseDropdownOpen)}
+              style={{
+                width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '14px 20px', borderRadius: 'var(--radius-lg)',
+                border: '2px solid var(--color-brand)', background: '#FFFFFF',
+                cursor: 'pointer', fontSize: '0.92rem', fontWeight: 700,
+                color: 'var(--color-text-primary)', boxShadow: 'var(--shadow-sm)',
+                transition: 'all var(--transition-fast)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: 'linear-gradient(135deg, var(--color-brand), #7C3AED)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF'
+                }}>
+                  {activeCourse.icon === 'shield' && <Shield size={18} />}
+                  {activeCourse.icon === 'bar-chart' && <BarChart2 size={18} />}
+                  {activeCourse.icon === 'layers' && <Layers size={18} />}
+                  {activeCourse.icon === 'code' && <Code size={18} />}
+                  {activeCourse.icon === 'trending-up' && <TrendingUp size={18} />}
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <div>{activeCourse.title || 'Select Assessment Course'}</div>
+                  <div style={{ fontSize: '0.76rem', fontWeight: 500, color: 'var(--color-text-muted)', marginTop: 2 }}>
+                    {activeCourse.description || 'Choose a course to begin'}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {activeCourse.difficulty && (
+                  <span className="badge badge-accent" style={{ fontSize: '0.7rem' }}>{activeCourse.difficulty}</span>
+                )}
+                {activeCourse.duration && (
+                  <span className="badge badge-neutral" style={{ fontSize: '0.7rem' }}>
+                    <Clock size={11} style={{ marginRight: 3 }} />{activeCourse.duration}
+                  </span>
+                )}
+                <ChevronDown size={18} style={{
+                  transition: 'transform 0.2s ease',
+                  transform: courseDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  color: 'var(--color-brand)'
+                }} />
+              </div>
+            </button>
+
+            {/* Dropdown Options */}
+            {courseDropdownOpen && (
+              <div style={{
+                position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
+                marginTop: 6, background: '#FFFFFF', borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-lg)',
+                overflow: 'hidden', animation: 'fadeIn 0.15s ease'
+              }}>
+                {courses.map((course) => (
+                  <div
+                    key={course.id}
+                    onClick={() => handleCourseChange(course.id)}
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      padding: '14px 20px', cursor: 'pointer',
+                      background: selectedCourse === course.id ? 'var(--color-brand-tint)' : '#FFFFFF',
+                      borderLeft: selectedCourse === course.id ? '3px solid var(--color-brand)' : '3px solid transparent',
+                      borderBottom: '1px solid var(--color-border)',
+                      transition: 'all var(--transition-fast)'
+                    }}
+                    onMouseEnter={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = '#F8FAFC'; }}
+                    onMouseLeave={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = '#FFFFFF'; }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{
+                        width: 34, height: 34, borderRadius: 8,
+                        background: selectedCourse === course.id
+                          ? 'linear-gradient(135deg, var(--color-brand), #7C3AED)'
+                          : '#F1F5F9',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: selectedCourse === course.id ? '#FFF' : 'var(--color-text-secondary)'
+                      }}>
+                        {course.icon === 'shield' && <Shield size={16} />}
+                        {course.icon === 'bar-chart' && <BarChart2 size={16} />}
+                        {course.icon === 'layers' && <Layers size={16} />}
+                        {course.icon === 'code' && <Code size={16} />}
+                        {course.icon === 'trending-up' && <TrendingUp size={16} />}
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-text-primary)' }}>
+                          {course.title}
+                        </div>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--color-text-muted)', marginTop: 2 }}>
+                          {course.competencies} · {course.questionsCount} Questions · {course.duration}
+                        </div>
+                      </div>
+                    </div>
+                    {selectedCourse === course.id && (
+                      <CheckCircle size={18} color="var(--color-brand)" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Exam Summary & Live Progress Bar Banner */}
           <div className="card" style={{
             background: 'linear-gradient(135deg, #F0FDF4 0%, #EEF2FF 100%)',
@@ -161,10 +288,10 @@ export default function AssessmentsPage() {
                   Official Cadre Evaluation
                 </div>
                 <h2 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 6px 0', color: 'var(--color-text-primary)' }}>
-                  Statistical Officer Comprehensive Diagnostic (Stage II)
+                  {activeCourse.title || 'Select an Assessment Course'}
                 </h2>
                 <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--color-text-secondary)' }}>
-                  Questions: <strong>{questions.length}</strong> (MCQ, Multi-select, Numerical, Scenario) | Passing Grade: <strong>70%</strong> | Competencies Evaluated: <strong>5 Core Domains</strong>
+                  Questions: <strong>{questions.length}</strong> (MCQ, Multi-select, Numerical, Scenario) | Passing Grade: <strong>{activeCourse.passingGrade || 70}%</strong> | Competencies Evaluated: <strong>{activeCourse.competencies || '—'}</strong>
                 </p>
               </div>
 

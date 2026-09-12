@@ -10,11 +10,72 @@
  * - Scenario-Based Case Question
  */
 
+// Assessment Courses Catalog
+export const assessmentCourses = [
+  {
+    id: "COURSE_ALL",
+    title: "Statistical Officer Comprehensive Diagnostic (Stage II)",
+    description: "Full cadre evaluation covering all 5 core competency domains",
+    icon: "shield",
+    questionsCount: 5,
+    passingGrade: 70,
+    competencies: "5 Core Domains",
+    difficulty: "Advanced",
+    duration: "45 min"
+  },
+  {
+    id: "COURSE_NATIONAL_ACCOUNTS",
+    title: "National Accounts & GVA Certification",
+    description: "Focused evaluation on National Accounts compilation, GVA estimation, and GDP methodology",
+    icon: "bar-chart",
+    questionsCount: 3,
+    passingGrade: 70,
+    competencies: "National Accounts Statistics",
+    difficulty: "Intermediate",
+    duration: "20 min"
+  },
+  {
+    id: "COURSE_SURVEY_SAMPLING",
+    title: "NSS & PLFS Sampling Methodology",
+    description: "Assessment on survey design, stratification, sample size estimation and PLFS methodology",
+    icon: "layers",
+    questionsCount: 3,
+    passingGrade: 70,
+    competencies: "Sample Survey Design",
+    difficulty: "Advanced",
+    duration: "25 min"
+  },
+  {
+    id: "COURSE_DATA_TECH",
+    title: "Python & Data Quality for Official Statistics",
+    description: "Technical evaluation on Python programming, data quality frameworks and digital governance",
+    icon: "code",
+    questionsCount: 3,
+    passingGrade: 70,
+    competencies: "Technical & Digital Governance",
+    difficulty: "Intermediate",
+    duration: "20 min"
+  },
+  {
+    id: "COURSE_PRICE_STATS",
+    title: "Price Statistics & Index Numbers",
+    description: "Evaluation on CPI/WPI compilation, index number theory, Laspeyres and Paasche indices",
+    icon: "trending-up",
+    questionsCount: 3,
+    passingGrade: 70,
+    competencies: "Price Statistics",
+    difficulty: "Intermediate",
+    duration: "20 min"
+  }
+];
+
 export const mockQuestionBank = [
+  // ---- National Accounts questions ----
   {
     id: "Q001",
     type: "single-mcq",
     category: "statistical",
+    courseId: "COURSE_NATIONAL_ACCOUNTS",
     competencyId: "COMP_NATIONAL_ACCOUNTS",
     question: "Which approach is primary for estimating Gross Value Added (GVA) for the manufacturing sector in India's National Accounts (2011-12 series)?",
     options: [
@@ -28,9 +89,40 @@ export const mockQuestionBank = [
     points: 10
   },
   {
+    id: "Q006",
+    type: "single-mcq",
+    category: "statistical",
+    courseId: "COURSE_NATIONAL_ACCOUNTS",
+    competencyId: "COMP_NATIONAL_ACCOUNTS",
+    question: "What is the base year currently used for India's GDP estimation under the revised National Accounts methodology?",
+    options: [
+      "2004-05",
+      "2011-12",
+      "2017-18",
+      "2000-01"
+    ],
+    correctAnswer: 1,
+    explanation: "India's GDP is currently compiled at 2011-12 base year prices under the revised National Accounts methodology introduced by CSO (now NSO).",
+    points: 10
+  },
+  {
+    id: "Q007",
+    type: "true-false",
+    category: "statistical",
+    courseId: "COURSE_NATIONAL_ACCOUNTS",
+    competencyId: "COMP_NATIONAL_ACCOUNTS",
+    question: "GDP at Market Prices equals GVA at Basic Prices plus Product Taxes minus Production Subsidies.",
+    options: ["True", "False"],
+    correctAnswer: 0,
+    explanation: "GDP at Market Prices = GVA at Basic Prices + Product Taxes (net of subsidies on products). This is the standard identity used in SNA 2008.",
+    points: 5
+  },
+  // ---- Survey & Sampling questions ----
+  {
     id: "Q002",
     type: "multi-mcq",
     category: "statistical",
+    courseId: "COURSE_SURVEY_SAMPLING",
     competencyId: "COMP_SURVEY_DESIGN",
     question: "Which of the following are stratification criteria commonly utilized in MoSPI's Periodic Labour Force Survey (PLFS) sampling design? (Select all that apply)",
     options: [
@@ -44,9 +136,40 @@ export const mockQuestionBank = [
     points: 15
   },
   {
+    id: "Q008",
+    type: "single-mcq",
+    category: "statistical",
+    courseId: "COURSE_SURVEY_SAMPLING",
+    competencyId: "COMP_SURVEY_DESIGN",
+    question: "In PLFS, what is the rotation pattern used for urban sample households?",
+    options: [
+      "No rotation — same households surveyed every quarter",
+      "75% rotation — replace 25% of panels each quarter (4-quarter rotation)",
+      "50% rotation — replace half the sample every round",
+      "100% rotation — entirely new sample each quarter"
+    ],
+    correctAnswer: 1,
+    explanation: "PLFS uses a rotational panel design where 25% of urban First Stage Units (FSUs) are replaced each quarter, creating a 75% overlap between consecutive quarters for robust quarterly estimates.",
+    points: 10
+  },
+  {
+    id: "Q009",
+    type: "numerical",
+    category: "statistical",
+    courseId: "COURSE_SURVEY_SAMPLING",
+    competencyId: "COMP_SURVEY_DESIGN",
+    question: "If a stratified random sample has 4 strata with equal allocation of 50 units each from populations of 1000, 2000, 3000, and 4000. What is the total sample size?",
+    correctNumeric: 200,
+    tolerance: 0.1,
+    explanation: "With equal allocation of 50 units per stratum across 4 strata: 50 × 4 = 200 total sample units.",
+    points: 10
+  },
+  // ---- Python & Data Quality questions ----
+  {
     id: "Q003",
     type: "true-false",
     category: "technical",
+    courseId: "COURSE_DATA_TECH",
     competencyId: "COMP_PYTHON",
     question: "In Python pandas library, the `.dropna()` method modifies the original DataFrame in-place by default without needing `inplace=True`.",
     options: ["True", "False"],
@@ -55,20 +178,10 @@ export const mockQuestionBank = [
     points: 5
   },
   {
-    id: "Q004",
-    type: "numerical",
-    category: "statistical",
-    competencyId: "COMP_INDEX_NUMBERS",
-    question: "If base year price P0 = 100, current year price P1 = 125, base year quantity Q0 = 20, and current year quantity Q1 = 22. What is the Laspeyres Price Relative for this item? (Calculate in percentage, e.g. 125)",
-    correctNumeric: 125,
-    tolerance: 0.1,
-    explanation: "Laspeyres price relative = (P1 / P0) * 100 = (125 / 100) * 100 = 125%.",
-    points: 10
-  },
-  {
     id: "Q005",
     type: "scenario",
     category: "digital-governance",
+    courseId: "COURSE_DATA_TECH",
     competencyId: "COMP_DATA_QUALITY",
     question: "Case Scenario: A field investigator in FOD collects survey microdata where 12% of values in rural income are missing non-randomly (MNAR). According to MoSPI National Data Quality Framework guidelines, what is the approved remediation protocol?",
     options: [
@@ -80,6 +193,70 @@ export const mockQuestionBank = [
     correctAnswer: 1,
     explanation: "Per MoSPI Data Quality protocols, non-random missingness must be documented in data provenance metadata, treated using appropriate stratified imputation (like hot-deck), and accompanied by sensitivity disclosure.",
     points: 20
+  },
+  {
+    id: "Q010",
+    type: "single-mcq",
+    category: "technical",
+    courseId: "COURSE_DATA_TECH",
+    competencyId: "COMP_PYTHON",
+    question: "Which Python library is most commonly used for reading fixed-width format (FWF) files from NSS survey raw data tapes?",
+    options: [
+      "csv module with custom delimiters",
+      "pandas read_fwf() function",
+      "json module with schema mapping",
+      "openpyxl with column parsing"
+    ],
+    correctAnswer: 1,
+    explanation: "pandas.read_fwf() is specifically designed for reading fixed-width formatted text files, which is the standard format for NSS and Census microdata tapes.",
+    points: 10
+  },
+  // ---- Price Statistics & Index Numbers questions ----
+  {
+    id: "Q004",
+    type: "numerical",
+    category: "statistical",
+    courseId: "COURSE_PRICE_STATS",
+    competencyId: "COMP_INDEX_NUMBERS",
+    question: "If base year price P0 = 100, current year price P1 = 125, base year quantity Q0 = 20, and current year quantity Q1 = 22. What is the Laspeyres Price Relative for this item? (Calculate in percentage, e.g. 125)",
+    correctNumeric: 125,
+    tolerance: 0.1,
+    explanation: "Laspeyres price relative = (P1 / P0) * 100 = (125 / 100) * 100 = 125%.",
+    points: 10
+  },
+  {
+    id: "Q011",
+    type: "single-mcq",
+    category: "statistical",
+    courseId: "COURSE_PRICE_STATS",
+    competencyId: "COMP_INDEX_NUMBERS",
+    question: "What is the current base year for India's Consumer Price Index (CPI) compiled by NSO?",
+    options: [
+      "2010",
+      "2012",
+      "2016",
+      "2001"
+    ],
+    correctAnswer: 1,
+    explanation: "India's CPI (Combined, Rural, Urban) is currently compiled with 2012 as the base year by the National Statistical Office.",
+    points: 10
+  },
+  {
+    id: "Q012",
+    type: "multi-mcq",
+    category: "statistical",
+    courseId: "COURSE_PRICE_STATS",
+    competencyId: "COMP_INDEX_NUMBERS",
+    question: "Which of the following are key differences between Laspeyres and Paasche price indices? (Select all that apply)",
+    options: [
+      "Laspeyres uses base-period quantities as weights",
+      "Paasche uses current-period quantities as weights",
+      "Both use the same weighting scheme",
+      "Fisher's Ideal Index is the geometric mean of Laspeyres and Paasche"
+    ],
+    correctAnswers: [0, 1, 3],
+    explanation: "Laspeyres uses base-period quantity weights (Q0), Paasche uses current-period weights (Q1), and Fisher's Ideal Index = √(Laspeyres × Paasche).",
+    points: 15
   }
 ];
 
@@ -120,8 +297,19 @@ import { getCompetencyService } from './CompetencyService.js';
 import { getUserById } from '@/data/mock-users';
 
 export class AssessmentService {
+  getCourses() {
+    return assessmentCourses;
+  }
+
   getAllQuestions() {
     return mockQuestionBank;
+  }
+
+  getQuestionsByCourse(courseId) {
+    if (!courseId || courseId === 'COURSE_ALL') {
+      return mockQuestionBank;
+    }
+    return mockQuestionBank.filter(q => q.courseId === courseId);
   }
 
   getQuestionsByCompetency(competencyId) {
@@ -136,7 +324,8 @@ export class AssessmentService {
    * Evaluates assessment submission, maps questions to competencies,
    * updates competency scores, recalculates skill gaps, and records history.
    */
-  submitAssessment({ userId = 'USR001', answers = {} }) {
+  submitAssessment({ userId = 'USR001', answers = {}, courseId = 'COURSE_ALL' }) {
+    const questionsToScore = this.getQuestionsByCourse(courseId);
     let earnedPoints = 0;
     let totalPoints = 0;
     const details = [];
@@ -153,7 +342,7 @@ export class AssessmentService {
       });
     }
 
-    for (const q of mockQuestionBank) {
+    for (const q of questionsToScore) {
       totalPoints += q.points;
       const userAns = answers[q.id];
       let isCorrect = false;
@@ -239,10 +428,11 @@ export class AssessmentService {
       }
     }
 
+    const courseInfo = assessmentCourses.find(c => c.id === courseId) || assessmentCourses[0];
     // 7. Save attempt in Assessment History & Records
     const historyItem = {
       id: `HIST-${Date.now()}`,
-      assessmentTitle: "Statistical Officer Comprehensive Diagnostic (Stage II)",
+      assessmentTitle: courseInfo.title,
       date: new Date().toISOString().split('T')[0],
       score: earnedPoints,
       maxScore: totalPoints,

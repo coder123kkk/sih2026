@@ -167,11 +167,12 @@ export class CompetencyService {
     const profile = this.getUserCompetencyProfile(userId);
     if (!profile) return [];
 
-    return Object.entries(profile.byCategory).map(([category, comps]) => {
-      const avgScore = comps.reduce((sum, c) => sum + c.percentScore, 0) / comps.length;
+    return Object.entries(profile.byCategory).map(([category, catObj]) => {
+      const comps = catObj.competencies || [];
+      const avgScore = comps.length > 0 ? comps.reduce((sum, c) => sum + c.percentScore, 0) / comps.length : 0;
       return {
         category,
-        categoryName: comps[0]?.categoryName || category,
+        categoryName: catObj.name || category,
         score: Math.round(avgScore),
         competencyCount: comps.length,
         gapCount: comps.filter(c => c.gap > 0).length
@@ -219,8 +220,13 @@ export class CompetencyService {
   _groupByCategory(competencies) {
     const groups = {};
     for (const comp of competencies) {
-      if (!groups[comp.category]) groups[comp.category] = [];
-      groups[comp.category].push(comp);
+      if (!groups[comp.category]) {
+        groups[comp.category] = {
+          name: comp.categoryName || comp.category,
+          competencies: []
+        };
+      }
+      groups[comp.category].competencies.push(comp);
     }
     return groups;
   }
