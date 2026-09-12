@@ -68,9 +68,12 @@ export class GeminiAIService {
         }
       ],
       generationConfig: {
-        temperature: options.temperature ?? 0.4,
+        temperature: options.temperature ?? 0.5,
         maxOutputTokens: options.maxOutputTokens ?? 4096,
-        responseMimeType: options.jsonMode ? 'application/json' : 'text/plain'
+        responseMimeType: options.jsonMode ? 'application/json' : 'text/plain',
+        ...(this.model.includes('2.5') || this.model.includes('2.0') ? {
+          thinkingConfig: { thinkingBudget: options.thinkingBudget ?? 0 }
+        } : {})
       }
     };
 
@@ -81,7 +84,7 @@ export class GeminiAIService {
     }
 
     const controller = new AbortController();
-    const timeoutMs = options.timeoutMs || 12000;
+    const timeoutMs = options.timeoutMs || 20000;
     const timer = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
@@ -630,10 +633,12 @@ $$\\mathbf{UPSS\\text{ Employed (Workforce)}} = \\mathbf{UPS\\text{ Workers}} + 
 
 Based on your current competency profile as **${designation}** in **${dept}**, your highest-priority gaps are **${gapNames}**. I recommend strengthening these areas first.
 
-Here are your recommended capacity building resources tailored to your active assignment on ${assignment}:
+### Priority Capacity Building Recommendations
+Here are your recommended capacity building resources tailored to your active assignment on **${assignment}**:
 
 ${recommendedCourses.map((c, i) => `${i + 1}. **[${c.id}] ${c.title}** (${c.duration}) — ${c.reason}`).join('\n')}
 
+${recommendedTraining.length > 0 ? `### Recommended Academy Training\n* **[${recommendedTraining[0].id}] ${recommendedTraining[0].title}** (${recommendedTraining[0].duration}) — ${recommendedTraining[0].reason}\n` : ''}
 How else can I assist your capacity building today?`;
   }
 
@@ -689,15 +694,16 @@ Known Skill Gaps: ${JSON.stringify(skillGaps)}
 Generate the career development pathway with exact matching courses from the iGOT and NSSTA lists provided.`;
 
     try {
-      const responseText = await this.generateContent(prompt, systemPrompt, { jsonMode: true, temperature: 0.3, maxOutputTokens: 4096 });
+      const responseText = await this.generateContent(prompt, systemPrompt, { jsonMode: true, temperature: 0.75, maxOutputTokens: 4096 });
       const cleaned = this._cleanJson(responseText);
       const parsed = JSON.parse(cleaned);
       return { success: true, data: parsed };
     } catch (error) {
-      console.error('Pathway generation failed:', error);
-      // Fallback structured data
+      console.error('Pathway generation failed or timed out, serving structured MoSPI cadre progression fallback:', error.message);
+      // Robust Fallback structured data
       return {
-        success: false,
+        success: true,
+        fallback: true,
         data: {
           pathwayTitle: `${currentRole} to ${targetRole} Progression Pathway`,
           executiveSummary: `Targeted capability roadmap bridging functional and statistical competencies for elevation to ${targetRole}.`,
@@ -706,13 +712,13 @@ Generate the career development pathway with exact matching courses from the iGO
           phases: [
             {
               phaseNumber: 1,
-              title: "Core Statistical Foundations & Methodology",
-              duration: "Months 1-4",
+              title: "Core Statistical Foundations & Macroeconomic Methodology",
+              duration: targetTimeline.includes('6') ? "Months 1-2" : "Months 1-4",
               objective: "Close critical gaps in National Accounts and Sample Survey Design.",
               competenciesTargeted: ["National Accounts Statistics", "Sample Survey Design"],
               recommendedIGOTCourses: [
-                { id: "CRS002", title: "National Accounts Statistics — Concepts & Compilation", relevance: "Directly addresses critical gap in SNA 2008 framework" },
-                { id: "CRS004", title: "Sample Survey Design & Estimation Techniques", relevance: "Strengthens survey sampling and weighting methodology" }
+                { id: "igot-crs-010", title: "National Accounts Statistics", relevance: "Directly addresses critical gap in SNA 2008 framework and GVA compilation" },
+                { id: "igot-crs-008", title: "Survey Design and Methodology", relevance: "Strengthens survey sampling, CAPI design, and weighting methodology" }
               ],
               recommendedNSSTAProgrammes: [
                 { id: "NSSTA001", title: "National Accounts Statistics — Methodology & Practice", relevance: "Hands-on SUT compilation at NSSTA Greater Noida" }
@@ -722,30 +728,30 @@ Generate the career development pathway with exact matching courses from the iGO
             {
               phaseNumber: 2,
               title: "Digital Analytics & Modern Computing Tools",
-              duration: "Months 5-8",
+              duration: targetTimeline.includes('6') ? "Months 3-4" : "Months 5-8",
               objective: "Upskill in automated data validation, Python/R, and microdata processing.",
-              competenciesTargeted: ["Python for Data Analysis", "Data Visualization & Dashboards"],
+              competenciesTargeted: ["Python for Tabulation & Data Analysis", "R Programming"],
               recommendedIGOTCourses: [
-                { id: "CRS001", title: "Python for Data Analysis in Government", relevance: "Automate routine statistical tabulations" },
-                { id: "CRS007", title: "Data Visualization & Dashboard Design for Policy", relevance: "Design executive dashboards for ministerial reporting" }
+                { id: "igot-crs-001", title: "Python for Data Analysis in Government", relevance: "Automate routine statistical tabulations and data wrangling" },
+                { id: "igot-crs-007", title: "R Programming for Statistical Analysis", relevance: "Advanced statistical modeling and survey quality checks" }
               ],
               recommendedNSSTAProgrammes: [
-                { id: "NSSTA004", title: "R Programming for Official Statistics", relevance: "Advanced statistical modeling" }
+                { id: "NSSTA005", title: "GIS and Geospatial Analysis for Statistical Mapping", relevance: "Practical spatial boundary and thematic mapping" }
               ],
               practicalMilestone: "Build an automated quarterly statistical bulletin pipeline."
             },
             {
               phaseNumber: 3,
               title: "Strategic Leadership & Dissemination",
-              duration: "Months 9-12",
+              duration: targetTimeline.includes('6') ? "Months 5-6" : "Months 9-12",
               objective: "Master data governance, official release protocols, and SDG 2030 monitoring.",
               competenciesTargeted: ["Official Statistics Governance", "Public Policy Analytics"],
               recommendedIGOTCourses: [
-                { id: "CRS006", title: "Data Governance & Quality Framework for Official Statistics", relevance: "NDSAP compliance and metadata standards" },
-                { id: "CRS008", title: "Monitoring Sustainable Development Goals (SDGs)", relevance: "National Indicator Framework monitoring" }
+                { id: "igot-crs-012", title: "Leadership in Public Administration", relevance: "Strategic public leadership and inter-departmental collaboration" },
+                { id: "igot-crs-013", title: "SDG Indicators — Monitoring and Reporting", relevance: "National Indicator Framework monitoring" }
               ],
               recommendedNSSTAProgrammes: [
-                { id: "NSSTA005", title: "Leadership Development for Senior Statistical Officers", relevance: "Executive decision making and inter-ministerial coordination" }
+                { id: "NSSTA002", title: "Advanced Sampling Techniques for Large-Scale Surveys", relevance: "Executive decision making and precision estimation" }
               ],
               practicalMilestone: "Lead inter-departmental statistical coordination working group."
             }
@@ -800,7 +806,8 @@ Return strictly valid JSON with this schema:
     } catch (error) {
       console.error('Assessment generation failed:', error);
       return {
-        success: false,
+        success: true,
+        fallback: true,
         data: {
           competencyName,
           level,
