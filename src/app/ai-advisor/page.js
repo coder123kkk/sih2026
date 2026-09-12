@@ -25,39 +25,94 @@ function AIAdvisorContent() {
   // ==========================================
   // Tab 1: AI Copilot State
   // ==========================================
-  const defaultMessages = [
-    {
-      role: 'assistant',
-      text: "Namaste Dr. Priya Sharma! I am your **Karmayogi AI Copilot** for India's Official Statistical System.\n\nI have real-time access to your competency profile, the **MoSPI official statistical guidelines**, and the complete **iGOT Karmayogi** course catalogue. How can I assist your capacity building today?",
-      suggestedCourses: [
-        {
-          id: 'igot-crs-001',
-          title: 'Python for Data Analysis in Government',
-          source: 'iGOT Karmayogi',
-          provider: 'Capacity Building Commission',
-          competency: 'Python & Data Analysis',
-          duration: '2h 30m',
-          level: 'Intermediate',
-          actionUrl: '/igot/igot-crs-001'
-        },
-        {
-          id: 'igot-crs-002',
-          title: 'National Accounts Statistics — Methodology & Compilation',
-          source: 'iGOT Karmayogi',
-          provider: 'National Statistical Systems Training Academy',
-          competency: 'National Accounts',
-          duration: '4h 00m',
-          level: 'Advanced',
-          actionUrl: '/igot/igot-crs-002'
-        }
-      ]
-    }
-  ];
+  const [currentUserId, setCurrentUserId] = useState(() => searchParams.get('userId') || 'USR001');
 
-  const [messages, setMessages] = useState(defaultMessages);
+  // Helper to generate dynamic default greeting based on active user
+  const getInitialMessages = (userId) => {
+    if (userId === 'USR002') {
+      return [
+        {
+          role: 'assistant',
+          text: "Namaste Rajesh Kumar Verma! I am your **Karmayogi AI Copilot** for India's Official Statistical System.\n\nBased on your active competency profile as **Statistical Officer (Field Operations)**, your highest-priority gaps are **National Accounts** and **Sampling Techniques**. How can I assist your capacity building today?",
+          suggestedCourses: [
+            {
+              id: 'igot-crs-010',
+              title: 'National Accounts Statistics',
+              source: 'iGOT Karmayogi',
+              provider: 'National Statistical Systems Training Academy',
+              competency: 'National Accounts Statistics',
+              duration: '4h 00m',
+              level: 'Advanced',
+              actionUrl: '/igot/igot-crs-010',
+              reason: 'Addresses your National Accounts competency gap (Current: 30%, Required: 75%).'
+            },
+            {
+              id: 'igot-crs-009',
+              title: 'Sampling Techniques in Practice',
+              source: 'iGOT Karmayogi',
+              provider: 'NSSTA Greater Noida',
+              competency: 'Sampling Techniques',
+              duration: '3h 30m',
+              level: 'Intermediate',
+              actionUrl: '/igot/igot-crs-009',
+              reason: 'Addresses your Sampling Techniques competency gap (Current: 35%, Required: 75%).'
+            }
+          ]
+        }
+      ];
+    }
+
+    return [
+      {
+        role: 'assistant',
+        text: "Namaste Dr. Priya Sharma! I am your **Karmayogi AI Copilot** for India's Official Statistical System.\n\nBased on your active competency profile as **Deputy Director (ISS Group A)**, your highest-priority gaps are **National Accounts** and **Survey Design**. How can I assist your capacity building today?",
+        suggestedCourses: [
+          {
+            id: 'igot-crs-010',
+            title: 'National Accounts Statistics',
+            source: 'iGOT Karmayogi',
+            provider: 'National Statistical Systems Training Academy',
+            competency: 'National Accounts Statistics',
+            duration: '4h 00m',
+            level: 'Advanced',
+            actionUrl: '/igot/igot-crs-010',
+            reason: 'Addresses your National Accounts competency gap (Current: 45%, Required: 80%).'
+          },
+          {
+            id: 'igot-crs-008',
+            title: 'Survey Design and Methodology',
+            source: 'iGOT Karmayogi',
+            provider: 'NSSTA Greater Noida',
+            competency: 'Survey Design & Sampling',
+            duration: '6h 00m',
+            level: 'Advanced',
+            actionUrl: '/igot/igot-crs-008',
+            reason: 'Addresses your Survey Design/Sampling competency gap (Current: 50%, Required: 85%).'
+          }
+        ]
+      }
+    ];
+  };
+
+  const [messages, setMessages] = useState(() => getInitialMessages(searchParams.get('userId') || 'USR001'));
   const [chatInput, setChatInput] = useState('');
   const [chatLoading, setChatLoading] = useState(false);
+
+  // Sync userId if searchParams change
+  useEffect(() => {
+    const uParam = searchParams.get('userId');
+    if (uParam && ['USR001', 'USR002'].includes(uParam) && uParam !== currentUserId) {
+      setCurrentUserId(uParam);
+      setMessages(getInitialMessages(uParam));
+    }
+  }, [searchParams]);
+
+  const switchUser = (userId) => {
+    setCurrentUserId(userId);
+    setMessages(getInitialMessages(userId));
+  };
   const chatBottomRef = useRef(null);
+  const chatStreamRef = useRef(null);
 
   // Suggested prompt chips as requested
   const promptSuggestions = [
@@ -97,10 +152,13 @@ function AIAdvisorContent() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
-  // Scroll chat to bottom
+  // Scroll chat within container without jumping the main window
   useEffect(() => {
-    if (activeTab === 'copilot') {
-      chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (activeTab === 'copilot' && chatStreamRef.current) {
+      chatStreamRef.current.scrollTo({
+        top: chatStreamRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }, [messages, activeTab, chatLoading]);
 
@@ -138,90 +196,7 @@ function AIAdvisorContent() {
     }
   }, []);
 
-  // Helper to extract course recommendations for chat responses
-  const getContextualRecommendations = (userText, aiReply) => {
-    const text = (userText + ' ' + (aiReply || '')).toLowerCase();
-    const recs = [];
-
-    if (text.includes('gap') || text.includes('recommend') || text.includes('course') || text.includes('plan') || text.includes('learn') || text.includes('score')) {
-      if (text.includes('python') || text.includes('technical') || text.includes('data analysis') || text.includes('gap')) {
-        recs.push({
-          id: 'igot-crs-001',
-          title: 'Python for Data Analysis in Government',
-          source: 'iGOT Karmayogi',
-          provider: 'Capacity Building Commission',
-          competency: 'Python & Data Analysis',
-          duration: '2h 30m',
-          level: 'Intermediate',
-          actionUrl: '/igot/igot-crs-001'
-        });
-      }
-      if (text.includes('account') || text.includes('gdp') || text.includes('gva') || text.includes('statistical') || text.includes('gap')) {
-        recs.push({
-          id: 'igot-crs-002',
-          title: 'National Accounts Statistics — Methodology & Compilation',
-          source: 'iGOT Karmayogi',
-          provider: 'National Statistical Systems Training Academy',
-          competency: 'National Accounts',
-          duration: '4h 00m',
-          level: 'Advanced',
-          actionUrl: '/igot/igot-crs-002'
-        });
-      }
-      if (text.includes('cloud') || text.includes('governance') || text.includes('digital') || text.includes('score')) {
-        recs.push({
-          id: 'igot-crs-014',
-          title: 'Cloud Computing for Government & GI Cloud (MeghRaj)',
-          source: 'iGOT Karmayogi',
-          provider: 'Ministry of Electronics and IT',
-          competency: 'Government Cloud',
-          duration: '3h 15m',
-          level: 'Intermediate',
-          actionUrl: '/igot/igot-crs-014'
-        });
-      }
-      if (text.includes('survey') || text.includes('sample') || text.includes('plfs') || text.includes('nss')) {
-        recs.push({
-          id: 'igot-crs-003',
-          title: 'Sample Survey Design and Estimation in Official Statistics',
-          source: 'NSSTA Programme',
-          provider: 'NSSTA Greater Noida',
-          competency: 'Sampling & Survey Design',
-          duration: '2 Weeks (Residential)',
-          level: 'Advanced',
-          actionUrl: '/training'
-        });
-      }
-    }
-
-    // Default fallback if no specific keywords matched
-    if (recs.length === 0 && (text.includes('course') || text.includes('recommend') || text.includes('gap') || text.includes('plan'))) {
-      recs.push({
-        id: 'igot-crs-001',
-        title: 'Python for Data Analysis in Government',
-        source: 'iGOT Karmayogi',
-        provider: 'Capacity Building Commission',
-        competency: 'Python & Data Analysis',
-        duration: '2h 30m',
-        level: 'Intermediate',
-        actionUrl: '/igot/igot-crs-001'
-      });
-      recs.push({
-        id: 'igot-crs-002',
-        title: 'National Accounts Statistics — Methodology',
-        source: 'iGOT Karmayogi',
-        provider: 'NSSTA',
-        competency: 'National Accounts',
-        duration: '4h 00m',
-        level: 'Advanced',
-        actionUrl: '/igot/igot-crs-002'
-      });
-    }
-
-    return recs.slice(0, 3);
-  };
-
-  // Handle Copilot Chat Send
+  // Handle Copilot Chat Send (Requirements 1, 2, 3, 4, 7, 8, 9, 10)
   const handleSendMessage = async (textToSend) => {
     const text = textToSend || chatInput;
     if (!text.trim() || chatLoading) return;
@@ -238,35 +213,40 @@ function AIAdvisorContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: newMsgs,
-          userContext: {
-            name: 'Dr. Priya Sharma',
-            designation: 'Deputy Director (ISS Group A)',
-            department: 'Labour Statistics Division, MoSPI',
-            gaps: ['National Accounts Statistics', 'GIS Spatial Analysis', 'Python for Tabulation', 'Metadata Standards']
-          }
+          userId: currentUserId
         })
       });
       const data = await res.json();
       const replyText = data.reply || "I apologize, but I encountered an error connecting to the AI service. Please try again.";
-      const contextualCourses = getContextualRecommendations(text, replyText);
+      
+      // REQUIREMENT 7: CHAT RESPONSE AND RECOMMENDATION CARDS MUST COME FROM THE SAME RESULT
+      const suggestedCourses = (data.recommendedCourses && data.recommendedCourses.length > 0)
+        ? data.recommendedCourses
+        : (getInitialMessages(currentUserId)[0]?.suggestedCourses || []);
+
+      // REQUIREMENT 10: ADD DEBUG DATA IN DEVELOPMENT ONLY
+      if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development' && data.debug) {
+        console.log('[AI Copilot Debug Info]:', data.debug);
+      }
 
       setMessages([
         ...newMsgs,
         {
           role: 'assistant',
           text: replyText,
-          suggestedCourses: contextualCourses
+          suggestedCourses,
+          priorityGaps: data.priorityGaps || []
         }
       ]);
     } catch (err) {
       console.error('Chat error:', err);
-      const fallbackCourses = getContextualRecommendations(text, '');
+      const fallbackInitial = getInitialMessages(currentUserId)[0];
       setMessages([
         ...newMsgs,
         {
           role: 'assistant',
-          text: "Based on MoSPI standard guidelines, focusing on your priority skill gaps (National Accounts, Python, and GIS) will maximize your competency index and DPC readiness. Explore the recommended official courses below:",
-          suggestedCourses: fallbackCourses
+          text: fallbackInitial?.text || "Based on your active competency evaluation, focusing on your priority skill gaps will maximize your competency index. Explore the recommended official courses below:",
+          suggestedCourses: fallbackInitial?.suggestedCourses || []
         }
       ]);
     } finally {
@@ -394,7 +374,7 @@ function AIAdvisorContent() {
           {/* Main Chat Container Card */}
           <div className="card" style={{
             display: 'flex', flexDirection: 'column',
-            minHeight: '680px', height: 'calc(100vh - 280px)',
+            minHeight: '520px', height: 'calc(100vh - 220px)',
             maxHeight: '820px', padding: 0, overflow: 'hidden',
             border: '1px solid var(--color-border)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
@@ -424,16 +404,34 @@ function AIAdvisorContent() {
                     </span>
                   </div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
-                    Active Context: <strong style={{ color: 'var(--color-text-primary)' }}>Dr. Priya Sharma</strong> (Deputy Director, Labour Statistics)
+                    Active Context: <strong style={{ color: 'var(--color-text-primary)' }}>{currentUserId === 'USR002' ? 'Rajesh Kumar Verma' : 'Dr. Priya Sharma'}</strong> ({currentUserId === 'USR002' ? 'Statistical Officer (SSS), FOD' : 'Deputy Director (ISS Group A), Labour Statistics'})
                   </div>
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: '#F1F5F9', padding: '2px 4px', borderRadius: 'var(--radius-md)' }}>
+                  <button
+                    className={`btn ${currentUserId === 'USR001' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ padding: '4px 8px', fontSize: '0.72rem', height: 'auto', minHeight: 'unset' }}
+                    onClick={() => switchUser('USR001')}
+                    title="User A: Deputy Director (ISS Group A)"
+                  >
+                    User A (ISS)
+                  </button>
+                  <button
+                    className={`btn ${currentUserId === 'USR002' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ padding: '4px 8px', fontSize: '0.72rem', height: 'auto', minHeight: 'unset' }}
+                    onClick={() => switchUser('USR002')}
+                    title="User B: Technical Statistical Officer"
+                  >
+                    User B (Tech Officer)
+                  </button>
+                </div>
                 <button
                   className="btn btn-secondary"
                   style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: 6 }}
-                  onClick={() => setMessages(defaultMessages)}
+                  onClick={() => setMessages(getInitialMessages(currentUserId))}
                   title="Reset to initial greeting"
                 >
                   <RefreshCw size={13} />
@@ -443,10 +441,13 @@ function AIAdvisorContent() {
             </div>
 
             {/* Chat Message Stream */}
-            <div style={{
-              flex: 1, overflowY: 'auto', padding: '24px 20px',
-              display: 'flex', flexDirection: 'column', gap: 20
-            }}>
+            <div
+              ref={chatStreamRef}
+              style={{
+                flex: 1, overflowY: 'auto', padding: '24px 20px',
+                display: 'flex', flexDirection: 'column', gap: 20
+              }}
+            >
               {/* Empty State / Welcome Showcase if only initial message */}
               {messages.length === 1 && (
                 <div style={{
@@ -561,7 +562,7 @@ function AIAdvisorContent() {
                     ) : (
                       <>
                         <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-                          You (Dr. Priya Sharma)
+                          You ({currentUserId === 'USR002' ? 'Rajesh Kumar Verma' : 'Dr. Priya Sharma'})
                         </span>
                         <div style={{
                           width: 22, height: 22, borderRadius: '50%',
@@ -612,7 +613,7 @@ function AIAdvisorContent() {
                             Recommended Capacity Building Resources:
                           </div>
                           <Link
-                            href="/learning"
+                            href={`/learning?userId=${currentUserId}`}
                             style={{
                               fontSize: '0.75rem', color: 'var(--color-brand)',
                               display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none',
@@ -650,11 +651,11 @@ function AIAdvisorContent() {
                                   <span style={{
                                     fontSize: '0.7rem', fontWeight: 700,
                                     padding: '2px 8px', borderRadius: 'var(--radius-full)',
-                                    background: c.source.includes('iGOT') ? 'rgba(217, 119, 6, 0.1)' : 'rgba(79, 70, 229, 0.1)',
-                                    color: c.source.includes('iGOT') ? '#D97706' : '#4F46E5',
-                                    border: `1px solid ${c.source.includes('iGOT') ? 'rgba(217, 119, 6, 0.25)' : 'rgba(79, 70, 229, 0.25)'}`
+                                    background: (c.source || '').includes('iGOT') ? 'rgba(217, 119, 6, 0.1)' : 'rgba(79, 70, 229, 0.1)',
+                                    color: (c.source || '').includes('iGOT') ? '#D97706' : '#4F46E5',
+                                    border: `1px solid ${(c.source || '').includes('iGOT') ? 'rgba(217, 119, 6, 0.25)' : 'rgba(79, 70, 229, 0.25)'}`
                                   }}>
-                                    {c.source}
+                                    {c.source || 'iGOT Karmayogi'}
                                   </span>
                                   <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
                                     {c.duration}
@@ -669,13 +670,24 @@ function AIAdvisorContent() {
                                   {c.title}
                                 </div>
 
-                                <div style={{
-                                  fontSize: '0.76rem', color: 'var(--color-text-secondary)',
-                                  display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12
-                                }}>
-                                  <Target size={12} color="var(--color-brand)" />
-                                  <span>Targets: {c.competency}</span>
-                                </div>
+                                {c.reason ? (
+                                  <div style={{
+                                    fontSize: '0.75rem', color: '#059669',
+                                    display: 'flex', alignItems: 'flex-start', gap: 6, marginBottom: 10,
+                                    lineHeight: 1.35
+                                  }}>
+                                    <CheckCircle size={13} style={{ flexShrink: 0, marginTop: 2 }} />
+                                    <span>{c.reason}</span>
+                                  </div>
+                                ) : (
+                                  <div style={{
+                                    fontSize: '0.76rem', color: 'var(--color-text-secondary)',
+                                    display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12
+                                  }}>
+                                    <Target size={12} color="var(--color-brand)" />
+                                    <span>Targets: {c.competency}</span>
+                                  </div>
+                                )}
                               </div>
 
                               <div style={{
@@ -683,7 +695,7 @@ function AIAdvisorContent() {
                                 paddingTop: 10, borderTop: '1px solid var(--color-border)'
                               }}>
                                 <Link
-                                  href={c.actionUrl || `/igot`}
+                                  href={c.actionUrl || `/igot/${c.id}`}
                                   className="btn btn-primary"
                                   style={{
                                     flex: 1, padding: '6px 12px', fontSize: '0.78rem',
@@ -691,17 +703,17 @@ function AIAdvisorContent() {
                                     textDecoration: 'none'
                                   }}
                                 >
-                                  View Course <ArrowRight size={13} />
+                                  {c.actionLabel || (c.isEnrolled ? 'Continue Learning' : 'View Course')} <ArrowRight size={13} />
                                 </Link>
                                 <Link
-                                  href="/learning"
+                                  href={`/learning?userId=${currentUserId}`}
                                   className="btn btn-secondary"
                                   style={{
                                     padding: '6px 10px', fontSize: '0.78rem',
                                     display: 'flex', alignItems: 'center', gap: 4,
                                     textDecoration: 'none'
                                   }}
-                                  title="Add to My Learning Pathway"
+                                  title="View in Personalized Learning Pathway"
                                 >
                                   Pathway
                                 </Link>
