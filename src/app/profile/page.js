@@ -612,8 +612,9 @@ export default function ProfilePage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-            {competencies?.byCategory && Object.entries(competencies.byCategory).map(([cat, comps]) => {
-              const avg = Math.round(comps.reduce((s, c) => s + c.percentScore, 0) / comps.length);
+            {competencies?.byCategory && Object.entries(competencies.byCategory).map(([cat, catObj]) => {
+              const comps = Array.isArray(catObj) ? catObj : (catObj.competencies || []);
+              const avg = comps.length > 0 ? Math.round(comps.reduce((s, c) => s + c.percentScore, 0) / comps.length) : 0;
               const names = { statistical: 'Statistical', technical: 'Technical', digital: 'Digital Gov.', behavioural: 'Behavioural' };
               const colors = { statistical: '#3B82F6', technical: '#8B5CF6', digital: '#10B981', behavioural: '#F59E0B' };
               return (
