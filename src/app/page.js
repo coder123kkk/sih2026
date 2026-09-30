@@ -39,12 +39,12 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="page-container" style={{ padding: 40, textAlign: 'center' }}>
-        <div className="loading-skeleton" style={{ height: 120, borderRadius: 16, marginBottom: 24 }} />
+      <div className="page-container" style={{ padding: 40, textAlign: 'center', background: 'var(--color-bg-primary)' }}>
+        <div className="loading-skeleton" style={{ height: 120, borderRadius: 'var(--radius-xl)', marginBottom: 24, background: 'var(--color-bg-secondary)' }} />
         <div className="stats-grid">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="stat-card">
-              <div className="loading-skeleton" style={{ height: 80 }} />
+            <div key={i} className="stat-card" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
+              <div className="loading-skeleton" style={{ height: 80, background: 'var(--color-bg-tertiary)' }} />
             </div>
           ))}
         </div>
@@ -61,13 +61,13 @@ export default function DashboardPage() {
   const completed = enrollments.filter(e => e.completionStatus === 'completed');
 
   return (
-    <div className="page-container animate-fade-in" style={{ paddingBottom: 48 }}>
+    <div className="page-container animate-fade-in" style={{ paddingBottom: 48, background: 'var(--color-bg-primary)' }}>
       {/* ======================================================== */}
       {/* 1. TOP HERO SECTION: WARM EDTECH GREETING & SUMMARY      */}
       {/* ======================================================== */}
       <div style={{
-        background: 'linear-gradient(135deg, #EEF2FF 0%, #F0FDFA 60%, #FFFFFF 100%)',
-        border: '1px solid #C7D2FE',
+        background: 'var(--color-bg-secondary)', // Obsidian Surface
+        border: '1px solid var(--color-border)',
         borderRadius: 'var(--radius-xl)',
         padding: '28px 32px',
         marginBottom: 28,
@@ -81,24 +81,26 @@ export default function DashboardPage() {
         <div>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
-            padding: '4px 12px', borderRadius: 20, background: '#FFFFFF',
-            border: '1px solid #C7D2FE', color: 'var(--color-brand)',
-            fontSize: '0.78rem', fontWeight: 700, marginBottom: 12
+            padding: '4px 12px', borderRadius: 'var(--radius-pill)', background: 'var(--color-surface-chip)',
+            border: '1px solid var(--color-border)', color: 'var(--color-text-primary)',
+            fontSize: '14px', fontWeight: 400, marginBottom: 12, letterSpacing: '-0.224px'
           }}>
-            <Sparkles size={14} color="#6366F1" />
+            <Sparkles size={14} color="var(--color-brand)" />
             Official Cadre Capacity Building
           </div>
           <h1 style={{
-            fontSize: '2rem', fontWeight: 800, color: 'var(--color-text-primary)',
-            margin: '0 0 6px 0', letterSpacing: '-0.02em'
+            fontFamily: 'var(--font-heading)',
+            fontSize: '40px', fontWeight: 600, color: 'var(--color-text-primary)',
+            margin: '0 0 6px 0', letterSpacing: '0px', lineHeight: 1.1
           }}>
-            Good morning, Dr. Priya Sharma 👋
+            Good morning, Dr. Priya Sharma
           </h1>
           <p style={{
-            fontSize: '0.95rem', color: 'var(--color-text-secondary)',
-            margin: 0, maxWidth: 640, lineHeight: 1.5
+            fontFamily: 'var(--font-body)',
+            fontSize: '17px', color: 'var(--color-text-secondary)',
+            margin: 0, maxWidth: 640, lineHeight: 1.47, letterSpacing: '-0.374px'
           }}>
-            Continue building your official statistical competencies. You have <strong>{inProgress.length} courses in progress</strong> and <strong>{topGaps.length} priority skill gaps</strong> identified for promotion readiness.
+            Continue building your official statistical competencies. You have <strong style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{inProgress.length} courses in progress</strong> and <strong style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{topGaps.length} priority skill gaps</strong> identified for promotion readiness.
           </p>
         </div>
 
@@ -107,14 +109,14 @@ export default function DashboardPage() {
           <Link
             href="/learning"
             className="btn btn-primary btn-lg"
-            style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 28px', borderRadius: 'var(--radius-pill)', background: 'var(--color-bg-secondary)', fontSize: '18px', fontWeight: 300, border: 'none' }}
           >
             <Play size={16} /> Resume Learning
           </Link>
           <Link
             href="/ai-advisor"
             className="btn btn-secondary btn-lg"
-            style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 28px', borderRadius: 'var(--radius-pill)', background: 'transparent', borderColor: 'var(--color-brand)', color: 'var(--color-brand)', fontSize: '18px', fontWeight: 300 }}
           >
             <Bot size={18} color="var(--color-brand)" /> AI Copilot
           </Link>
@@ -126,75 +128,75 @@ export default function DashboardPage() {
       {/* ======================================================== */}
       <div style={{ marginBottom: 32 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: 400, margin: 0, color: 'var(--color-text-primary)', letterSpacing: '0.196px' }}>
             Your Learning Snapshot
           </h2>
-          <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-muted)', letterSpacing: '-0.224px' }}>
             Calibrated against ISS Cadre Framework
           </span>
         </div>
 
         <div className="stats-grid">
           {/* Overall Competency */}
-          <div className="stat-card">
+          <div className="stat-card" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="stat-label">Overall Competency</span>
-              <div className="stat-icon" style={{ background: '#EEF2FF', color: 'var(--color-brand)', marginBottom: 0 }}>
+              <span className="stat-label" style={{ color: 'var(--color-text-secondary)' }}>Overall Competency</span>
+              <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-full)', marginBottom: 0 }}>
                 <Award size={20} />
               </div>
             </div>
-            <div className="stat-value" style={{ color: 'var(--color-brand)', marginTop: 8 }}>
+            <div className="stat-value" style={{ color: 'var(--color-text-primary)', marginTop: 8, fontFamily: 'var(--font-heading)', fontSize: '34px', fontWeight: 600, letterSpacing: '-0.374px' }}>
               {overallScore}%
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-muted)', marginTop: 4 }}>
               Level 2.8 (Intermediate Standard)
             </div>
           </div>
 
           {/* Learning Progress */}
-          <div className="stat-card">
+          <div className="stat-card" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="stat-label">Pathway Completion</span>
-              <div className="stat-icon" style={{ background: '#F0FDF4', color: '#0D9488', marginBottom: 0 }}>
+              <span className="stat-label" style={{ color: 'var(--color-text-secondary)' }}>Pathway Completion</span>
+              <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-full)', marginBottom: 0 }}>
                 <TrendingUp size={20} />
               </div>
             </div>
-            <div className="stat-value" style={{ color: '#0D9488', marginTop: 8 }}>
+            <div className="stat-value" style={{ color: 'var(--color-text-primary)', marginTop: 8, fontFamily: 'var(--font-heading)', fontSize: '34px', fontWeight: 600, letterSpacing: '-0.374px' }}>
               64%
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-muted)', marginTop: 4 }}>
               5 of 8 milestones completed
             </div>
           </div>
 
           {/* Strongest Domain */}
-          <div className="stat-card">
+          <div className="stat-card" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="stat-label">Strongest Competency</span>
-              <div className="stat-icon" style={{ background: '#FEF3C7', color: '#D97706', marginBottom: 0 }}>
+              <span className="stat-label" style={{ color: 'var(--color-text-secondary)' }}>Strongest Competency</span>
+              <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-full)', marginBottom: 0 }}>
                 <CheckCircle size={20} />
               </div>
             </div>
-            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#92400E', marginTop: 10, lineHeight: 1.2 }}>
+            <div style={{ fontFamily: 'var(--font-heading)', fontSize: '21px', fontWeight: 600, color: 'var(--color-brand)', marginTop: 10, lineHeight: 1.19, letterSpacing: '0.231px' }}>
               Statistical Survey
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 6 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-muted)', marginTop: 6 }}>
               Score: 92% • Level 4 Advanced
             </div>
           </div>
 
           {/* Learning Hours & Streak */}
-          <div className="stat-card">
+          <div className="stat-card" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="stat-label">Learning Dedicated</span>
-              <div className="stat-icon" style={{ background: '#FDF4FF', color: '#7C3AED', marginBottom: 0 }}>
+              <span className="stat-label" style={{ color: 'var(--color-text-secondary)' }}>Learning Dedicated</span>
+              <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-full)', marginBottom: 0 }}>
                 <Clock size={20} />
               </div>
             </div>
-            <div className="stat-value" style={{ color: '#7C3AED', marginTop: 8 }}>
+            <div className="stat-value" style={{ color: 'var(--color-text-primary)', marginTop: 8, fontFamily: 'var(--font-heading)', fontSize: '34px', fontWeight: 600, letterSpacing: '-0.374px' }}>
               48h
             </div>
-            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-muted)', marginTop: 4 }}>
               Across iGOT & NSSTA modules
             </div>
           </div>
@@ -209,16 +211,16 @@ export default function DashboardPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 28, height: 28, borderRadius: 6,
-              background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: 'var(--color-brand)'
+              background: 'var(--color-surface-chip)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'var(--color-text-primary)'
             }}>
               <Play size={15} />
             </div>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: 400, margin: 0, color: 'var(--color-text-primary)', letterSpacing: '0.196px' }}>
               Continue Learning
             </h2>
           </div>
-          <Link href="/learning" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-brand)' }}>
+          <Link href="/learning" style={{ fontFamily: 'var(--font-body)', fontSize: '17px', fontWeight: 400, color: 'var(--color-brand)' }}>
             View all courses →
           </Link>
         </div>
@@ -235,38 +237,40 @@ export default function DashboardPage() {
                 flexWrap: 'wrap',
                 gap: 20,
                 padding: '20px 24px',
-                border: '1px solid var(--color-border)'
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-bg-card)',
+                borderRadius: 'var(--radius-lg)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 18, flex: 1, minWidth: 280 }}>
                 <div style={{
-                  width: 52, height: 52, borderRadius: 'var(--radius-md)',
-                  background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)',
+                  width: 52, height: 52, borderRadius: 'var(--radius-sm)',
+                  background: 'var(--color-bg-tertiary)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: 'var(--color-brand)', flexShrink: 0
+                  color: 'var(--color-text-primary)', flexShrink: 0
                 }}>
                   <BookOpen size={24} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span className="badge badge-warning" style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
+                    <span className="badge badge-warning" style={{ fontSize: '12px', padding: '2px 8px', background: 'var(--color-surface-chip)', color: 'var(--color-text-secondary)', border: 'none' }}>
                       {course.provider || 'iGOT Karmayogi'}
                     </span>
-                    <span style={{ fontSize: '0.74rem', color: 'var(--color-text-muted)' }}>
+                    <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
                       Duration: 2h 30m
                     </span>
                   </div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 8px 0' }}>
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '21px', fontWeight: 600, margin: '0 0 8px 0', color: 'var(--color-text-primary)', letterSpacing: '0.231px' }}>
                     {course.title}
                   </h3>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, maxWidth: 360 }}>
-                    <div className="progress-bar-container" style={{ flex: 1, height: 6 }}>
+                    <div className="progress-bar-container" style={{ flex: 1, height: 6, background: 'var(--color-border)' }}>
                       <div
                         className="progress-bar-fill"
-                        style={{ width: `${course.completionPercentage || 65}%` }}
+                        style={{ width: `${course.completionPercentage || 65}%`, background: 'var(--color-brand)' }}
                       />
                     </div>
-                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-brand)' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-brand)' }}>
                       {course.completionPercentage || 65}%
                     </span>
                   </div>
@@ -277,7 +281,7 @@ export default function DashboardPage() {
                 <Link
                   href={`/igot/${course.id || course.courseId}`}
                   className="btn btn-primary"
-                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 20px' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '11px 22px', borderRadius: 'var(--radius-pill)', background: 'var(--color-bg-secondary)', fontSize: '17px', border: 'none' }}
                 >
                   <Play size={15} /> Continue Course
                 </Link>
@@ -302,16 +306,16 @@ export default function DashboardPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 28, height: 28, borderRadius: 6,
-                background: '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#B45309'
+                background: 'var(--color-surface-chip)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--color-text-primary)'
               }}>
                 <Sparkles size={15} />
               </div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: 400, margin: 0, color: 'var(--color-text-primary)' }}>
                 Recommended for You
               </h2>
             </div>
-            <Link href="/igot" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-brand)' }}>
+            <Link href="/igot" style={{ fontFamily: 'var(--font-body)', fontSize: '17px', fontWeight: 400, color: 'var(--color-brand)' }}>
               Explore Catalogue →
             </Link>
           </div>
@@ -321,34 +325,34 @@ export default function DashboardPage() {
               <div
                 key={idx}
                 className="card"
-                style={{ padding: '18px 20px', border: '1px solid var(--color-border)' }}
+                style={{ padding: '18px 20px', border: '1px solid var(--color-border)', background: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}
               >
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
                   <div>
                     <div style={{
                       display: 'inline-flex', alignItems: 'center', gap: 6,
-                      padding: '2px 8px', borderRadius: 4, background: '#EEF2FF',
-                      color: 'var(--color-brand)', fontSize: '0.72rem', fontWeight: 700,
+                      padding: '2px 8px', borderRadius: '4px', background: 'var(--color-surface-chip)',
+                      color: 'var(--color-brand)', fontSize: '12px', fontWeight: 400,
                       marginBottom: 6
                     }}>
                       iGOT Karmayogi Course
                     </div>
-                    <h3 style={{ fontSize: '0.98rem', fontWeight: 700, margin: '0 0 6px 0', lineHeight: 1.35 }}>
+                    <h3 style={{ fontFamily: 'var(--font-body)', fontSize: '17px', fontWeight: 600, margin: '0 0 6px 0', lineHeight: 1.35, color: 'var(--color-text-primary)' }}>
                       {rec.course?.title || 'Cloud Computing for Government'}
                     </h3>
                     <div style={{
-                      fontSize: '0.78rem', color: 'var(--color-text-secondary)',
-                      padding: '4px 8px', background: '#F8FAFC', borderRadius: 6,
+                      fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-secondary)',
+                      padding: '8px 12px', background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-sm)',
                       borderLeft: '3px solid var(--color-brand)', marginBottom: 12
                     }}>
-                      <strong>Recommended because:</strong> {rec.reason || 'Addresses verified skill gap in Digital Infrastructure'}
+                      <strong style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>Recommended because:</strong> {rec.reason || 'Addresses verified skill gap in Digital Infrastructure'}
                     </div>
                   </div>
 
                   <Link
                     href={`/igot/${rec.course?.id || 'igot-crs-014'}`}
                     className="btn btn-secondary btn-sm"
-                    style={{ flexShrink: 0, padding: '7px 14px' }}
+                    style={{ flexShrink: 0, padding: '7px 14px', background: 'var(--color-surface-chip)', borderColor: 'transparent', color: 'var(--color-text-primary)' }}
                   >
                     View <ChevronRight size={14} />
                   </Link>
@@ -364,33 +368,33 @@ export default function DashboardPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 28, height: 28, borderRadius: 6,
-                background: '#FEE2E2', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#DC2626'
+                background: 'var(--color-surface-chip)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--color-text-primary)'
               }}>
                 <Flame size={15} />
               </div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: 400, margin: 0, color: 'var(--color-text-primary)' }}>
                 Your Priority Skills
               </h2>
             </div>
-            <Link href="/competencies" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-brand)' }}>
+            <Link href="/competencies" style={{ fontFamily: 'var(--font-body)', fontSize: '17px', fontWeight: 400, color: 'var(--color-brand)' }}>
               View Analysis →
             </Link>
           </div>
 
-          <div className="card" style={{ padding: '20px 22px', border: '1px solid var(--color-border)' }}>
+          <div className="card" style={{ padding: '20px 22px', border: '1px solid var(--color-border)', background: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {topGaps.slice(0, 4).map((gap) => (
                 <div key={gap.id} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-text-primary)' }}>
+                    <span style={{ fontWeight: 600, fontSize: '14px', color: 'var(--color-text-primary)' }}>
                       {gap.name}
                     </span>
                     <span style={{
-                      fontSize: '0.7rem', padding: '2px 8px', borderRadius: 10,
-                      background: gap.gapSeverity === 'critical' ? '#FEE2E2' : '#FEF3C7',
-                      color: gap.gapSeverity === 'critical' ? '#B91C1C' : '#B45309',
-                      fontWeight: 700
+                      fontSize: '12px', padding: '2px 8px', borderRadius: 10,
+                      background: 'var(--color-surface-chip)',
+                      color: gap.gapSeverity === 'critical' ? '#ff453a' : '#ffd60a',
+                      fontWeight: 600
                     }}>
                       Gap: {gap.gapScore || 25}%
                     </span>
@@ -398,16 +402,16 @@ export default function DashboardPage() {
 
                   {/* Progress Comparison */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div className="progress-bar-container" style={{ flex: 1, height: 8 }}>
+                    <div className="progress-bar-container" style={{ flex: 1, height: 8, background: 'var(--color-border)' }}>
                       <div
                         className="progress-bar-fill"
                         style={{
                           width: `${gap.currentScore || 50}%`,
-                          background: gap.gapSeverity === 'critical' ? '#DC2626' : 'var(--color-brand)'
+                          background: gap.gapSeverity === 'critical' ? '#ff453a' : 'var(--color-brand)'
                         }}
                       />
                     </div>
-                    <span style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', fontWeight: 600 }}>
+                    <span style={{ fontSize: '12px', color: 'var(--color-text-muted)', fontWeight: 600 }}>
                       {gap.currentScore || 50}% / {gap.requiredScore || 80}%
                     </span>
                   </div>
@@ -419,7 +423,7 @@ export default function DashboardPage() {
               <Link
                 href="/competencies"
                 className="btn btn-secondary"
-                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
               >
                 Explore All 24 Competencies <ArrowRight size={14} />
               </Link>
@@ -437,26 +441,26 @@ export default function DashboardPage() {
         gap: 24
       }}>
         {/* Pathway Roadmap Teaser */}
-        <div className="card" style={{ padding: '22px 24px', border: '1px solid var(--color-border)' }}>
+        <div className="card" style={{ padding: '22px 24px', border: '1px solid var(--color-border)', background: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 8,
-                background: '#F0FDF4', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#0D9488'
+                background: 'var(--color-surface-chip)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--color-text-primary)'
               }}>
                 <Compass size={18} />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '21px', fontWeight: 600, margin: 0, color: 'var(--color-text-primary)' }}>
                   Upcoming Pathway Milestones
                 </h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
+                <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
                   Targeting Deputy Director DPC Cycle
                 </span>
               </div>
             </div>
-            <Link href="/learning" className="btn btn-secondary btn-sm">
+            <Link href="/learning" className="btn btn-secondary btn-sm" style={{ background: 'var(--color-surface-chip)', borderColor: 'transparent', color: 'var(--color-text-primary)' }}>
               Full Journey →
             </Link>
           </div>
@@ -464,54 +468,54 @@ export default function DashboardPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px',
-              background: '#F8FAFC', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)'
+              background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)'
             }}>
               <span style={{
-                width: 24, height: 24, borderRadius: '50%', background: '#0D9488',
-                color: '#FFFFFF', fontSize: '0.72rem', fontWeight: 700,
+                width: 24, height: 24, borderRadius: '50%', background: 'var(--color-surface-chip)',
+                color: 'var(--color-bg-secondary)', fontSize: '12px', fontWeight: 700,
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 ✓
               </span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.86rem' }}>Sample Survey Design</div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)' }}>Completed • Cadre Evaluated</div>
+                <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--color-text-primary)' }}>Sample Survey Design</div>
+                <div style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Completed • Cadre Evaluated</div>
               </div>
             </div>
 
             <div style={{
               display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px',
-              background: '#EEF2FF', borderRadius: 'var(--radius-md)', border: '1px solid #C7D2FE'
+              background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-brand)'
             }}>
               <span style={{
                 width: 24, height: 24, borderRadius: '50%', background: 'var(--color-brand)',
-                color: '#FFFFFF', fontSize: '0.72rem', fontWeight: 700,
+                color: 'var(--color-bg-secondary)', fontSize: '12px', fontWeight: 700,
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 2
               </span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--color-brand)' }}>
+                <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--color-brand)' }}>
                   Python for Official Statistics
                 </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)' }}>Active Course • 65% Complete</div>
+                <div style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Active Course • 65% Complete</div>
               </div>
             </div>
 
             <div style={{
               display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px',
-              background: '#F8FAFC', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)'
+              background: 'var(--color-bg-tertiary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)'
             }}>
               <span style={{
-                width: 24, height: 24, borderRadius: '50%', background: '#E2E8F0',
-                color: 'var(--color-text-secondary)', fontSize: '0.72rem', fontWeight: 700,
+                width: 24, height: 24, borderRadius: '50%', background: 'var(--color-surface-chip)',
+                color: 'var(--color-text-muted)', fontSize: '12px', fontWeight: 700,
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 3
               </span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.86rem' }}>NSSTA National Accounts Masterclass</div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)' }}>Upcoming In-Service Training</div>
+                <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--color-text-primary)' }}>NSSTA National Accounts Masterclass</div>
+                <div style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Upcoming In-Service Training</div>
               </div>
             </div>
           </div>
@@ -519,9 +523,10 @@ export default function DashboardPage() {
 
         {/* AI Copilot Teaser Card */}
         <div className="card" style={{
-          padding: '22px 24px',
-          background: 'linear-gradient(135deg, #F3E8FF 0%, #EEF2FF 100%)',
-          border: '1px solid #DDD6FE',
+          padding: '24px',
+          background: 'var(--color-bg-secondary)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-lg)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between'
@@ -530,23 +535,23 @@ export default function DashboardPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10,
-                background: 'var(--gradient-primary)',
+                background: 'var(--color-brand)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#FFFFFF', boxShadow: '0 4px 10px rgba(79, 70, 229, 0.25)'
+                color: 'var(--color-bg-secondary)'
               }}>
                 <Sparkles size={18} />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.08rem', fontWeight: 800, margin: 0, color: 'var(--color-text-primary)' }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '21px', fontWeight: 600, margin: 0, color: 'var(--color-text-primary)', letterSpacing: '0.231px' }}>
                   Ask Your Karmayogi AI Copilot
                 </h3>
-                <span style={{ fontSize: '0.74rem', color: 'var(--color-brand)', fontWeight: 600 }}>
+                <span style={{ fontSize: '14px', color: 'var(--color-brand)', fontWeight: 600 }}>
                   Active • MoSPI Knowledge Engine
                 </span>
               </div>
             </div>
 
-            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: 18 }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '17px', color: 'var(--color-text-secondary)', lineHeight: 1.47, marginBottom: 18, letterSpacing: '-0.374px' }}>
               Have questions about your competency gaps, official statistical guidelines (e.g. SNA 2008, PLFS), or upcoming iGOT course selections? Your AI advisor is ready to guide you.
             </p>
 
@@ -560,9 +565,9 @@ export default function DashboardPage() {
                   key={idx}
                   href="/ai-advisor"
                   style={{
-                    padding: '4px 10px', borderRadius: 16, background: '#FFFFFF',
-                    border: '1px solid #C7D2FE', fontSize: '0.75rem', fontWeight: 600,
-                    color: 'var(--color-brand)', textDecoration: 'none'
+                    padding: '8px 15px', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface-chip)',
+                    border: 'none', fontSize: '14px', fontWeight: 400,
+                    color: 'var(--color-text-primary)', textDecoration: 'none'
                   }}
                 >
                   {chip}
@@ -576,7 +581,7 @@ export default function DashboardPage() {
             className="btn btn-primary"
             style={{
               width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              padding: '11px'
+              padding: '11px 22px', borderRadius: 'var(--radius-pill)', background: 'var(--color-bg-secondary)', border: 'none'
             }}
           >
             <Bot size={17} /> Open AI Copilot

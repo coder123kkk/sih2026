@@ -57,7 +57,7 @@ export default function Sidebar() {
         onClick={() => setMobileOpen(!mobileOpen)}
         style={{
           position: 'fixed', top: 14, left: 14, zIndex: 200,
-          background: '#FFFFFF', border: '1px solid var(--color-border)',
+          background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)',
           borderRadius: 'var(--radius-md)', padding: '8px',
           color: 'var(--color-text-primary)', cursor: 'pointer',
           display: 'none', boxShadow: 'var(--shadow-md)'
@@ -88,7 +88,7 @@ export default function Sidebar() {
           {currentNav.map((item, i) => {
             if (item.section) {
               return (
-                <div key={`section-${i}`} className="sidebar-section-title">
+               <div key={`section-${i}`} className="sidebar-section-title">
                   {item.section}
                 </div>
               );
@@ -125,8 +125,9 @@ export default function Sidebar() {
             onClick={() => setAdminMode(!adminMode)}
             className="btn btn-secondary btn-sm"
             style={{
-              width: '100%', marginBottom: 10, fontSize: '0.74rem',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6
+              width: '100%', marginBottom: 10, fontSize: '12px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+              background: 'var(--color-surface-chip)', borderColor: 'transparent', color: 'var(--color-text-primary)'
             }}
           >
             <ArrowRightLeft size={13} />

@@ -109,7 +109,7 @@ export default function AssessmentsPage() {
               width: 48, height: 48, borderRadius: 14,
               background: 'linear-gradient(135deg, #0D9488, #10B981)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(13, 148, 136, 0.3)', color: '#FFFFFF'
+              boxShadow: '0 4px 14px rgba(13, 148, 136, 0.3)', color: 'var(--color-bg-secondary)'
             }}>
               <Award size={24} />
             </div>
@@ -132,7 +132,7 @@ export default function AssessmentsPage() {
         {/* Tab Switcher */}
         <div style={{
           display: 'flex', gap: 8, marginTop: 20,
-          background: '#FFFFFF', padding: '4px',
+          background: 'var(--color-bg-secondary)', padding: '4px',
           borderRadius: 'var(--radius-lg)', width: 'fit-content',
           border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)'
         }}>
@@ -172,7 +172,7 @@ export default function AssessmentsPage() {
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '14px 20px', borderRadius: 'var(--radius-lg)',
-                border: '2px solid var(--color-brand)', background: '#FFFFFF',
+                border: '2px solid var(--color-brand)', background: 'var(--color-bg-secondary)',
                 cursor: 'pointer', fontSize: '0.92rem', fontWeight: 700,
                 color: 'var(--color-text-primary)', boxShadow: 'var(--shadow-sm)',
                 transition: 'all var(--transition-fast)'
@@ -218,7 +218,7 @@ export default function AssessmentsPage() {
             {courseDropdownOpen && (
               <div style={{
                 position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
-                marginTop: 6, background: '#FFFFFF', borderRadius: 'var(--radius-lg)',
+                marginTop: 6, background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)',
                 border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-lg)',
                 overflow: 'hidden', animation: 'fadeIn 0.15s ease'
               }}>
@@ -229,20 +229,20 @@ export default function AssessmentsPage() {
                     style={{
                       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                       padding: '14px 20px', cursor: 'pointer',
-                      background: selectedCourse === course.id ? 'var(--color-brand-tint)' : '#FFFFFF',
+                      background: 'var(--color-bg-secondary)',
                       borderLeft: selectedCourse === course.id ? '3px solid var(--color-brand)' : '3px solid transparent',
                       borderBottom: '1px solid var(--color-border)',
                       transition: 'all var(--transition-fast)'
                     }}
-                    onMouseEnter={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = '#F8FAFC'; }}
-                    onMouseLeave={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = '#FFFFFF'; }}
+                    onMouseEnter={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = 'var(--color-bg-tertiary)'; }}
+                    onMouseLeave={(e) => { if (selectedCourse !== course.id) e.currentTarget.style.background = 'var(--color-bg-secondary)'; }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                       <div style={{
                         width: 34, height: 34, borderRadius: 8,
                         background: selectedCourse === course.id
                           ? 'linear-gradient(135deg, var(--color-brand), #7C3AED)'
-                          : '#F1F5F9',
+                          : 'var(--color-bg-tertiary)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         color: selectedCourse === course.id ? '#FFF' : 'var(--color-text-secondary)'
                       }}>
@@ -272,8 +272,8 @@ export default function AssessmentsPage() {
 
           {/* Exam Summary & Live Progress Bar Banner */}
           <div className="card" style={{
-            background: 'linear-gradient(135deg, #F0FDF4 0%, #EEF2FF 100%)',
-            border: '1px solid #BBF7D0',
+            background: 'var(--color-bg-secondary)',
+            border: '1px solid var(--color-border)',
             padding: '24px 28px'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
@@ -281,7 +281,7 @@ export default function AssessmentsPage() {
                 <div style={{
                   display: 'inline-flex', alignItems: 'center', gap: 6,
                   padding: '3px 10px', borderRadius: 'var(--radius-full)',
-                  background: '#FFFFFF', border: '1px solid #BBF7D0',
+                  background: 'var(--color-bg-secondary)', border: '1px solid #BBF7D0',
                   color: '#15803D', fontSize: '0.74rem', fontWeight: 700, marginBottom: 8
                 }}>
                   <ShieldCheck size={14} color="#10B981" />
@@ -297,7 +297,7 @@ export default function AssessmentsPage() {
 
               {submitted && scoreResult ? (
                 <div style={{
-                  background: '#FFFFFF', padding: '16px 24px',
+                  background: 'var(--color-bg-secondary)', padding: '16px 24px',
                   borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)',
                   textAlign: 'center', boxShadow: 'var(--shadow-sm)'
                 }}>
@@ -359,28 +359,28 @@ export default function AssessmentsPage() {
                 display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
                 gap: 12, marginBottom: 20
               }}>
-                <div style={{ background: '#F8FAFC', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+                <div style={{ background: 'var(--color-bg-tertiary)', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Total Score</span>
                   <div style={{ fontSize: '1.5rem', fontWeight: 800, color: scoreResult.passed ? '#0D9488' : '#DC2626', marginTop: 2 }}>
                     {scoreResult.earnedPoints} / {scoreResult.totalPoints} <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>({scoreResult.percentage}%)</span>
                   </div>
                 </div>
 
-                <div style={{ background: '#F8FAFC', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+                <div style={{ background: 'var(--color-bg-tertiary)', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Evaluation Status</span>
                   <div style={{ fontSize: '1.15rem', fontWeight: 700, color: scoreResult.passed ? '#0D9488' : '#D97706', marginTop: 4 }}>
                     {scoreResult.passed ? 'PASSED (APAR Level)' : 'REQUIRES TRAINING'}
                   </div>
                 </div>
 
-                <div style={{ background: '#F8FAFC', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+                <div style={{ background: 'var(--color-bg-tertiary)', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Demonstrated Strengths</span>
                   <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0D9488', marginTop: 2 }}>
                     {scoreResult.strengths?.length || 0} <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Competencies Boosted</span>
                   </div>
                 </div>
 
-                <div style={{ background: '#F8FAFC', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+                <div style={{ background: 'var(--color-bg-tertiary)', padding: '14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Identified Skill Gaps</span>
                   <div style={{ fontSize: '1.5rem', fontWeight: 800, color: (scoreResult.weakAreas?.length > 0) ? '#DC2626' : '#0D9488', marginTop: 2 }}>
                     {scoreResult.weakAreas?.length || 0} <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Requiring Training</span>
@@ -400,7 +400,7 @@ export default function AssessmentsPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14, flexWrap: 'wrap', gap: 8 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{
-                        background: '#EEF2FF', padding: '3px 10px',
+                        background: 'var(--color-brand-tint)', padding: '3px 10px',
                         borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '0.82rem', color: 'var(--color-brand)'
                       }}>
                         Question {idx + 1}
@@ -430,7 +430,7 @@ export default function AssessmentsPage() {
                         const isSelected = answers[q.id] === oIdx;
                         let optStyle = {
                           padding: '12px 16px', borderRadius: 'var(--radius-md)',
-                          border: '1px solid var(--color-border)', background: '#FFFFFF',
+                          border: '1px solid var(--color-border)', background: 'var(--color-bg-secondary)',
                           cursor: submitted ? 'default' : 'pointer', fontSize: '0.9rem',
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                           transition: 'all var(--transition-fast)'
@@ -439,10 +439,10 @@ export default function AssessmentsPage() {
                         if (submitted) {
                           if (oIdx === q.correctAnswer) {
                             optStyle.borderColor = '#10B981';
-                            optStyle.background = '#F0FDF4';
+                            optStyle.background = 'rgba(16, 185, 129, 0.15)';
                           } else if (isSelected && !detail?.isCorrect) {
                             optStyle.borderColor = '#EF4444';
-                            optStyle.background = '#FEE2E2';
+                            optStyle.background = 'rgba(239, 68, 68, 0.15)';
                           }
                         } else if (isSelected) {
                           optStyle.borderColor = 'var(--color-brand)';
@@ -476,7 +476,7 @@ export default function AssessmentsPage() {
 
                         let optStyle = {
                           padding: '12px 16px', borderRadius: 'var(--radius-md)',
-                          border: '1px solid var(--color-border)', background: '#FFFFFF',
+                          border: '1px solid var(--color-border)', background: 'var(--color-bg-secondary)',
                           cursor: submitted ? 'default' : 'pointer', fontSize: '0.9rem',
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between'
                         };
@@ -533,7 +533,7 @@ export default function AssessmentsPage() {
           {/* Action Footer */}
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            marginTop: 10, padding: '16px 20px', background: '#FFFFFF',
+            marginTop: 10, padding: '16px 20px', background: 'var(--color-bg-secondary)',
             borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)'
           }}>
             <button

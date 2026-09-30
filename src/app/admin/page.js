@@ -74,7 +74,7 @@ export default function AdminDashboardPage() {
               width: 48, height: 48, borderRadius: 14,
               background: 'linear-gradient(135deg, #3730A3, #4F46E5)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)', color: '#FFFFFF'
+              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)', color: 'var(--color-bg-secondary)'
             }}>
               <Shield size={24} />
             </div>
@@ -106,7 +106,7 @@ export default function AdminDashboardPage() {
         {/* Tab Switcher */}
         <div style={{
           display: 'flex', gap: 8, marginTop: 20,
-          background: '#FFFFFF', padding: '4px',
+          background: 'var(--color-bg-secondary)', padding: '4px',
           borderRadius: 'var(--radius-lg)', width: 'fit-content',
           border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)'
         }}>
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
         <div className="stat-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
             <span className="stat-label">Total Officers</span>
-            <div className="stat-icon" style={{ background: '#EEF2FF', color: 'var(--color-brand)', marginBottom: 0 }}>
+            <div className="stat-icon" style={{ background: 'var(--color-brand-tint)', color: 'var(--color-brand)', marginBottom: 0 }}>
               <Users size={20} />
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
         <div className="stat-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
             <span className="stat-label">Active Programmes</span>
-            <div className="stat-icon" style={{ background: '#FEF3C7', color: '#D97706', marginBottom: 0 }}>
+            <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: '#D97706', marginBottom: 0 }}>
               <BookOpen size={20} />
             </div>
           </div>
@@ -270,7 +270,7 @@ export default function AdminDashboardPage() {
                       <td key={sIdx} style={{ padding: '8px' }}>
                         <div style={{
                           background: getHeatmapColor(score),
-                          color: '#FFFFFF',
+                          color: 'var(--color-bg-secondary)',
                           fontWeight: 700,
                           fontSize: '0.82rem',
                           padding: '6px 4px',

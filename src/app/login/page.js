@@ -50,7 +50,7 @@ export default function LoginPage() {
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      background: '#FFFFFF'
+      background: 'var(--color-bg-secondary)'
     }}>
       {/* LEFT SIDE: Visual EdTech Inspirational Banner */}
       <div style={{
@@ -80,7 +80,7 @@ export default function LoginPage() {
               width: 44, height: 44, borderRadius: 12,
               background: 'var(--gradient-primary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#FFFFFF', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
+              color: 'var(--color-bg-secondary)', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
             }}>
               <GraduationCap size={24} />
             </div>
@@ -100,7 +100,7 @@ export default function LoginPage() {
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '4px 12px', borderRadius: 20,
-            background: '#FFFFFF', border: '1px solid #C7D2FE',
+            background: 'var(--color-bg-secondary)', border: '1px solid #C7D2FE',
             color: 'var(--color-brand)', fontSize: '0.78rem', fontWeight: 700,
             marginBottom: 20, boxShadow: 'var(--shadow-sm)'
           }}>
@@ -132,7 +132,7 @@ export default function LoginPage() {
             }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 8,
-                background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'var(--color-brand-tint)', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: 'var(--color-brand)'
               }}>
                 <Target size={18} />
@@ -208,7 +208,7 @@ export default function LoginPage() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '48px 32px',
-        background: '#FFFFFF'
+        background: 'var(--color-bg-secondary)'
       }}>
         <div style={{ maxWidth: 440, width: '100%' }}>
           {/* Welcome Header */}
@@ -320,7 +320,7 @@ export default function LoginPage() {
           <div style={{
             marginTop: 28, padding: '14px 16px',
             borderRadius: 'var(--radius-md)',
-            background: '#FEF3C7', border: '1px solid #FDE68A',
+            background: 'var(--color-surface-chip)', border: '1px solid #FDE68A',
             color: '#92400E', fontSize: '0.78rem', lineHeight: 1.5
           }}>
             <div style={{ fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>

@@ -1456,7 +1456,7 @@ export default function ProfilePage() {
                           <div
                             style={{
                               position: 'absolute', top: 0, left: `${comp.requiredScore}%`,
-                              width: 3, height: '100%', background: '#FFFFFF', zIndex: 3,
+                              width: 3, height: '100%', background: 'var(--color-bg-secondary)', zIndex: 3,
                               boxShadow: '0 0 6px rgba(255, 255, 255, 0.9)'
                             }}
                             title={`Target Required Benchmark: ${comp.requiredScore}%`}
@@ -2556,7 +2556,7 @@ export default function ProfilePage() {
                         <div style={{
                           width: 18, height: 18, borderRadius: '50%',
                           border: isSelected ? '5px solid var(--color-primary)' : '2px solid var(--color-border)',
-                          background: isSelected ? '#FFFFFF' : 'transparent', marginTop: 2
+                          background: isSelected ? 'var(--color-bg-secondary)' : 'transparent', marginTop: 2
                         }} />
                       </div>
 

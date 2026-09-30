@@ -377,9 +377,9 @@ function LearningPageContent() {
       {/* ======================================================== */}
       <div className="card" style={{
         marginBottom: 24, padding: '20px 24px',
-        background: 'linear-gradient(135deg, #EEF2FF 0%, #F0FDF4 100%)',
-        border: '1px solid #C7D2FE',
-        boxShadow: '0 2px 10px rgba(79, 70, 229, 0.04)'
+        background: 'var(--color-bg-secondary)',
+        border: '1px solid var(--color-border)',
+        boxShadow: 'var(--shadow-sm)'
       }}>
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -414,14 +414,14 @@ function LearningPageContent() {
               key={idx}
               style={{
                 background: item.status === 'active'
-                  ? '#EEF2FF'
+                  ? 'var(--color-brand-tint)'
                   : item.status === 'completed'
-                  ? '#F0FDF4'
-                  : '#FFFFFF',
+                  ? 'rgba(16, 185, 129, 0.12)'
+                  : 'var(--color-bg-secondary)',
                 border: item.status === 'active'
-                  ? '1px solid #A5B4FC'
+                  ? '1px solid rgba(41, 151, 255, 0.4)'
                   : item.status === 'completed'
-                  ? '1px solid #BBF7D0'
+                  ? '1px solid rgba(16, 185, 129, 0.3)'
                   : '1px solid var(--color-border)',
                 borderRadius: 'var(--radius-md)',
                 padding: '12px 14px',
@@ -433,8 +433,8 @@ function LearningPageContent() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{
                   width: 22, height: 22, borderRadius: '50%',
-                  background: item.status === 'completed' ? '#10B981' : item.status === 'active' ? 'var(--color-brand)' : '#E2E8F0',
-                  color: item.status === 'upcoming' ? 'var(--color-text-secondary)' : '#FFFFFF', fontSize: '0.72rem', fontWeight: 700,
+                  background: item.status === 'completed' ? '#10B981' : item.status === 'active' ? 'var(--color-brand)' : 'var(--color-border)',
+                  color: item.status === 'upcoming' ? 'var(--color-text-secondary)' : 'var(--color-bg-secondary)', fontSize: '0.72rem', fontWeight: 700,
                   display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
                   {item.status === 'completed' ? <Check size={13} /> : item.step}
@@ -517,7 +517,7 @@ function LearningPageContent() {
                   key={gap.id}
                   onClick={() => setCompetencyQuery(isSelected ? '' : gap.name)}
                   style={{
-                    background: isSelected ? '#EEF2FF' : '#F8FAFC',
+                    background: isSelected ? 'var(--color-brand-tint)' : 'var(--color-bg-tertiary)',
                     border: isSelected ? '1px solid var(--color-brand)' : '1px solid var(--color-border)',
                     borderRadius: 'var(--radius-md)', padding: '10px 12px',
                     cursor: 'pointer', transition: 'all var(--transition-fast)'
@@ -577,8 +577,8 @@ function LearningPageContent() {
               {tab.label}
               <span style={{
                 marginLeft: 6, padding: '1px 6px', borderRadius: 10,
-                fontSize: '0.7rem', background: statusFilter === tab.id ? 'rgba(255, 255, 255, 0.25)' : '#E2E8F0',
-                color: statusFilter === tab.id ? '#FFFFFF' : 'var(--color-text-secondary)'
+                fontSize: '0.7rem', background: statusFilter === tab.id ? 'rgba(255, 255, 255, 0.25)' : 'var(--color-border)',
+                color: statusFilter === tab.id ? 'var(--color-bg-secondary)' : 'var(--color-text-secondary)'
               }}>
                 {tab.count}
               </span>
@@ -668,7 +668,7 @@ function LearningPageContent() {
                     : isInProgress
                     ? '1px solid rgba(79, 70, 229, 0.3)'
                     : '1px solid var(--color-border)',
-                  background: '#FFFFFF',
+                  background: 'var(--color-bg-secondary)',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                   transition: 'transform 0.15s ease, border-color 0.15s ease'
                 }}
@@ -690,7 +690,7 @@ function LearningPageContent() {
                     <span style={{
                       fontSize: '0.72rem', fontWeight: 700, padding: '2px 9px', borderRadius: 'var(--radius-full)',
                       display: 'flex', alignItems: 'center', gap: 5,
-                      background: isCompleted ? 'rgba(13, 148, 136, 0.1)' : isInProgress ? 'rgba(79, 70, 229, 0.1)' : '#F1F5F9',
+                      background: isCompleted ? 'rgba(13, 148, 136, 0.1)' : isInProgress ? 'rgba(79, 70, 229, 0.1)' : 'var(--color-bg-tertiary)',
                       color: isCompleted ? '#0D9488' : isInProgress ? '#4F46E5' : 'var(--color-text-secondary)',
                       border: isCompleted ? '1px solid rgba(13, 148, 136, 0.25)' : isInProgress ? '1px solid rgba(79, 70, 229, 0.25)' : '1px solid var(--color-border)'
                     }}>
@@ -714,7 +714,7 @@ function LearningPageContent() {
 
                   {/* Competency & Level Mapping */}
                   <div style={{
-                    background: '#F8FAFC', padding: '10px 12px',
+                    background: 'var(--color-bg-tertiary)', padding: '10px 12px',
                     borderRadius: 'var(--radius-md)', marginBottom: 14,
                     display: 'flex', flexDirection: 'column', gap: 6, fontSize: '0.78rem',
                     border: '1px solid var(--color-border)'
@@ -739,7 +739,7 @@ function LearningPageContent() {
                   <div style={{
                     fontSize: '0.76rem', color: 'var(--color-text-secondary)',
                     marginBottom: 16, lineHeight: 1.4,
-                    padding: '8px 12px', background: '#F8FAFC',
+                    padding: '8px 12px', background: 'var(--color-bg-tertiary)',
                     borderRadius: 6, borderLeft: '3px solid var(--color-brand)'
                   }}>
                     <strong>Pathway Rationale:</strong> {item.reason}

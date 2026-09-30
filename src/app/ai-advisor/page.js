@@ -451,13 +451,13 @@ function AIAdvisorContent() {
               {messages.length === 1 && (
                 <div style={{
                   margin: '0 auto 12px auto', maxWidth: 740, width: '100%',
-                  background: '#EEF2FF',
+                  background: 'var(--color-brand-tint)',
                   border: '1px solid #C7D2FE',
                   borderRadius: 'var(--radius-lg)', padding: '20px 24px'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                     <div style={{
-                      padding: 6, borderRadius: 8, background: '#E0E7FF',
+                      padding: 6, borderRadius: 8, background: 'var(--color-surface-chip)',
                       color: 'var(--color-brand)'
                     }}>
                       <Zap size={16} />
@@ -479,7 +479,7 @@ function AIAdvisorContent() {
                         onClick={() => handleSendMessage(item.query)}
                         style={{
                           textAlign: 'left', padding: '12px 14px',
-                          background: '#FFFFFF',
+                          background: 'var(--color-bg-secondary)',
                           border: '1px solid var(--color-border)',
                           borderRadius: 'var(--radius-md)',
                           cursor: 'pointer', display: 'flex',
@@ -488,17 +488,17 @@ function AIAdvisorContent() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.borderColor = 'var(--color-brand)';
-                          e.currentTarget.style.background = '#F8FAFC';
+                          e.currentTarget.style.background = 'var(--color-bg-tertiary)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.borderColor = 'var(--color-border)';
-                          e.currentTarget.style.background = '#FFFFFF';
+                          e.currentTarget.style.background = 'var(--color-bg-secondary)';
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                           <div style={{
                             width: 28, height: 28, borderRadius: 6,
-                            background: '#EEF2FF',
+                            background: 'var(--color-brand-tint)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             color: 'var(--color-brand)', flexShrink: 0
                           }}>
@@ -580,8 +580,8 @@ function AIAdvisorContent() {
                     borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '4px 16px 16px 16px',
                     background: m.role === 'user'
                       ? 'linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)'
-                      : '#FFFFFF',
-                    color: m.role === 'user' ? '#FFFFFF' : 'var(--color-text-primary)',
+                      : 'var(--color-bg-secondary)',
+                    color: m.role === 'user' ? 'var(--color-bg-secondary)' : 'var(--color-text-primary)',
                     border: m.role === 'user'
                       ? 'none'
                       : '1px solid var(--color-border)',
@@ -632,7 +632,7 @@ function AIAdvisorContent() {
                             <div
                               key={cIdx}
                               style={{
-                                background: '#F8FAFC',
+                                background: 'var(--color-bg-tertiary)',
                                 border: '1px solid var(--color-border)',
                                 borderRadius: 'var(--radius-md)',
                                 padding: '14px 16px',
@@ -749,7 +749,7 @@ function AIAdvisorContent() {
             {/* Suggested Prompt Chips Bar (Above Input Area) */}
             <div style={{
               padding: '10px 18px',
-              background: '#F8FAFC',
+              background: 'var(--color-bg-tertiary)',
               borderTop: '1px solid var(--color-border)',
               display: 'flex', alignItems: 'center', gap: 8,
               overflowX: 'auto', whiteSpace: 'nowrap'
@@ -768,7 +768,7 @@ function AIAdvisorContent() {
                   disabled={chatLoading}
                   style={{
                     padding: '5px 12px', fontSize: '0.78rem', borderRadius: 20,
-                    background: '#FFFFFF',
+                    background: 'var(--color-bg-secondary)',
                     border: '1px solid var(--color-border)',
                     color: 'var(--color-text-primary)', cursor: 'pointer',
                     display: 'inline-flex', alignItems: 'center', gap: 5,
@@ -796,7 +796,7 @@ function AIAdvisorContent() {
                   disabled={chatLoading}
                   style={{
                     padding: '5px 12px', fontSize: '0.76rem', borderRadius: 20,
-                    background: '#FFFFFF',
+                    background: 'var(--color-bg-secondary)',
                     border: '1px solid var(--color-border)',
                     color: 'var(--color-text-secondary)', cursor: 'pointer',
                     display: 'inline-flex', alignItems: 'center', gap: 5,
@@ -820,7 +820,7 @@ function AIAdvisorContent() {
             <div style={{
               padding: '16px 20px',
               borderTop: '1px solid var(--color-border)',
-              background: '#FFFFFF',
+              background: 'var(--color-bg-secondary)',
               position: 'relative'
             }}>
               <form
@@ -838,7 +838,7 @@ function AIAdvisorContent() {
                       padding: '14px 18px',
                       paddingLeft: 42,
                       fontSize: '0.92rem',
-                      background: '#F8FAFC',
+                      background: 'var(--color-bg-tertiary)',
                       borderColor: 'var(--color-border)',
                       borderRadius: 'var(--radius-md)',
                       color: 'var(--color-text-primary)',

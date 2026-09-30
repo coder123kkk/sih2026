@@ -107,7 +107,7 @@ export default function CompetenciesPage() {
           <div>
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
-              padding: '4px 12px', borderRadius: 20, background: '#EEF2FF',
+              padding: '4px 12px', borderRadius: 20, background: 'var(--color-brand-tint)',
               border: '1px solid #C7D2FE', color: 'var(--color-brand)',
               fontSize: '0.78rem', fontWeight: 700, marginBottom: 8
             }}>
@@ -147,7 +147,7 @@ export default function CompetenciesPage() {
         <div className="stat-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
             <span className="stat-label">Overall Competency</span>
-            <div className="stat-icon" style={{ background: '#EEF2FF', color: 'var(--color-brand)', marginBottom: 0 }}>
+            <div className="stat-icon" style={{ background: 'var(--color-brand-tint)', color: 'var(--color-brand)', marginBottom: 0 }}>
               <Award size={20} />
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function CompetenciesPage() {
         <div className="stat-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
             <span className="stat-label">Target Promotion Level</span>
-            <div className="stat-icon" style={{ background: '#FEF3C7', color: '#D97706', marginBottom: 0 }}>
+            <div className="stat-icon" style={{ background: 'var(--color-surface-chip)', color: '#D97706', marginBottom: 0 }}>
               <TrendingUp size={20} />
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function CompetenciesPage() {
                 href={`/learning?competency=${encodeURIComponent(g.name)}`}
                 style={{
                   padding: '6px 12px', borderRadius: 'var(--radius-sm)',
-                  background: g.competencyStatus === 'critical' ? '#FEE2E2' : '#FEF3C7',
+                  background: g.competencyStatus === 'critical' ? '#FEE2E2' : 'var(--color-surface-chip)',
                   border: `1px solid ${g.competencyStatus === 'critical' ? '#FECACA' : '#FDE68A'}`,
                   display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.82rem',
                   textDecoration: 'none'
@@ -367,7 +367,7 @@ export default function CompetenciesPage() {
                 padding: '20px 22px',
                 display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
                 border: isCritical ? '1px solid #FECACA' : '1px solid var(--color-border)',
-                background: '#FFFFFF'
+                background: 'var(--color-bg-secondary)'
               }}
             >
               <div>
@@ -384,7 +384,7 @@ export default function CompetenciesPage() {
 
                   <span style={{
                     fontSize: '0.7rem', fontWeight: 700, padding: '3px 8px', borderRadius: 'var(--radius-full)',
-                    background: isStrong ? '#F0FDF4' : isCritical ? '#FEE2E2' : '#FEF3C7',
+                    background: isStrong ? '#F0FDF4' : isCritical ? '#FEE2E2' : 'var(--color-surface-chip)',
                     color: isStrong ? '#15803D' : isCritical ? '#B91C1C' : '#B45309',
                     border: `1px solid ${isStrong ? '#BBF7D0' : isCritical ? '#FECACA' : '#FDE68A'}`
                   }}>
@@ -398,7 +398,7 @@ export default function CompetenciesPage() {
 
                 {/* Score and Gap Metrics */}
                 <div style={{
-                  background: '#F8FAFC', padding: '12px 14px', borderRadius: 'var(--radius-md)',
+                  background: 'var(--color-bg-tertiary)', padding: '12px 14px', borderRadius: 'var(--radius-md)',
                   marginBottom: 14, border: '1px solid var(--color-border)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>

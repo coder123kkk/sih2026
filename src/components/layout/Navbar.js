@@ -40,11 +40,11 @@ export default function Navbar() {
     <header className="top-navbar">
       {/* Left: Context Breadcrumb / Title */}
       <div className="navbar-context-title">
-        <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', fontWeight: 500 }}>
+        <span style={{ color: 'var(--color-text-secondary)', fontSize: '14px', fontWeight: 400 }}>
           India&apos;s Official Statistical System
         </span>
         <span style={{ color: 'var(--color-text-muted)' }}>/</span>
-        <span style={{ color: 'var(--color-text-primary)', fontWeight: 700 }}>
+        <span style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>
           {currentTitle}
         </span>
       </div>
@@ -56,17 +56,18 @@ export default function Navbar() {
           href="/ai-advisor"
           className="btn btn-sm"
           style={{
-            background: 'linear-gradient(135deg, #EEF2FF, #F3E8FF)',
-            border: '1px solid #C7D2FE',
+            background: 'var(--color-surface-chip)',
+            border: 'none',
             color: 'var(--color-brand)',
             display: 'flex',
             alignItems: 'center',
             gap: 6,
-            fontWeight: 700,
-            textDecoration: 'none'
+            fontWeight: 600,
+            textDecoration: 'none',
+            borderRadius: 'var(--radius-pill)'
           }}
         >
-          <Sparkles size={14} color="#6366F1" />
+          <Sparkles size={14} color="var(--color-brand)" />
           Ask AI Copilot
         </Link>
 
@@ -78,7 +79,7 @@ export default function Navbar() {
               setShowNotifications(!showNotifications);
               setShowProfileMenu(false);
             }}
-            style={{ padding: '7px 10px', position: 'relative' }}
+            style={{ padding: '7px 10px', position: 'relative', background: 'var(--color-surface-chip)', borderColor: 'transparent', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-pill)' }}
             title="Notifications"
           >
             <Bell size={16} />
@@ -91,16 +92,16 @@ export default function Navbar() {
           {showNotifications && (
             <div style={{
               position: 'absolute', right: 0, top: '100%', marginTop: 8,
-              width: 320, background: '#FFFFFF', border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)',
+              width: 320, background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)',
               zIndex: 100, padding: 12
             }}>
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 paddingBottom: 8, borderBottom: '1px solid var(--color-border)', marginBottom: 8
               }}>
-                <strong style={{ fontSize: '0.85rem' }}>Notifications</strong>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-brand)', cursor: 'pointer' }}>
+                <strong style={{ fontSize: '14px', color: 'var(--color-text-primary)' }}>Notifications</strong>
+                <span style={{ fontSize: '12px', color: 'var(--color-brand)', cursor: 'pointer' }}>
                   Mark all as read
                 </span>
               </div>
@@ -108,11 +109,11 @@ export default function Navbar() {
                 {notifications.map(n => (
                   <div key={n.id} style={{
                     padding: '8px 10px', borderRadius: 'var(--radius-sm)',
-                    background: 'var(--color-bg-primary)', fontSize: '0.78rem'
+                    background: 'var(--color-bg-tertiary)', fontSize: '12px'
                   }}>
-                    <div style={{ fontWeight: 700, color: 'var(--color-text-primary)' }}>{n.title}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>{n.title}</div>
                     <div style={{ color: 'var(--color-text-secondary)', marginTop: 2 }}>{n.text}</div>
-                    <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', marginTop: 4 }}>{n.time}</div>
+                    <div style={{ fontSize: '10px', color: 'var(--color-text-muted)', marginTop: 4 }}>{n.time}</div>
                   </div>
                 ))}
               </div>
@@ -128,16 +129,16 @@ export default function Navbar() {
               setShowNotifications(false);
             }}
             className="navbar-user-chip"
-            style={{ cursor: 'pointer', border: '1px solid var(--color-border)', background: 'transparent' }}
+            style={{ cursor: 'pointer', border: '1px solid var(--color-border)', background: 'var(--color-surface-chip)' }}
           >
-            <div className="navbar-avatar">
+            <div className="navbar-avatar" style={{ background: 'var(--color-brand)' }}>
               PS
             </div>
             <div style={{ textAlign: 'left', lineHeight: 1.2 }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 Dr. Priya Sharma
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)' }}>
+              <div style={{ fontSize: '10px', color: 'var(--color-text-secondary)' }}>
                 Deputy Director, MoSPI
               </div>
             </div>
@@ -147,17 +148,17 @@ export default function Navbar() {
           {showProfileMenu && (
             <div style={{
               position: 'absolute', right: 0, top: '100%', marginTop: 8,
-              width: 240, background: '#FFFFFF', border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)',
+              width: 240, background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)',
               zIndex: 100, padding: 8
             }}>
               <div style={{ padding: '8px 10px', borderBottom: '1px solid var(--color-border)', marginBottom: 6 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>Dr. Priya Sharma</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--color-text-secondary)' }}>priya.sharma@mospi.gov.in</div>
+                <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--color-text-primary)' }}>Dr. Priya Sharma</div>
+                <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>priya.sharma@mospi.gov.in</div>
                 <div style={{
                   display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 4,
-                  padding: '2px 6px', borderRadius: 4, background: '#FEF3C7',
-                  color: '#B45309', fontSize: '0.68rem', fontWeight: 700
+                  padding: '2px 6px', borderRadius: 4, background: 'var(--color-surface-chip)',
+                  color: 'var(--color-text-gold)', fontSize: '10px', fontWeight: 600
                 }}>
                   Demo Mode Active
                 </div>
@@ -167,7 +168,7 @@ export default function Navbar() {
                 href="/profile"
                 className="sidebar-link"
                 onClick={() => setShowProfileMenu(false)}
-                style={{ padding: '8px 10px', fontSize: '0.82rem' }}
+                style={{ padding: '8px 10px', fontSize: '14px', color: 'var(--color-text-primary)' }}
               >
                 <User size={15} /> My Profile & Identity
               </Link>
@@ -176,7 +177,7 @@ export default function Navbar() {
                 href="/learning"
                 className="sidebar-link"
                 onClick={() => setShowProfileMenu(false)}
-                style={{ padding: '8px 10px', fontSize: '0.82rem' }}
+                style={{ padding: '8px 10px', fontSize: '14px', color: 'var(--color-text-primary)' }}
               >
                 <CheckCircle size={15} /> My Learning Pathway
               </Link>
@@ -185,7 +186,7 @@ export default function Navbar() {
                 href="/admin"
                 className="sidebar-link"
                 onClick={() => setShowProfileMenu(false)}
-                style={{ padding: '8px 10px', fontSize: '0.82rem' }}
+                style={{ padding: '8px 10px', fontSize: '14px', color: 'var(--color-text-primary)' }}
               >
                 <Shield size={15} /> Cadre Admin Portal
               </Link>
@@ -195,7 +196,7 @@ export default function Navbar() {
                   href="/login"
                   className="sidebar-link"
                   onClick={() => setShowProfileMenu(false)}
-                  style={{ padding: '8px 10px', fontSize: '0.82rem', color: '#DC2626' }}
+                  style={{ padding: '8px 10px', fontSize: '14px', color: '#ff453a' }}
                 >
                   <LogOut size={15} /> Sign Out
                 </Link>
