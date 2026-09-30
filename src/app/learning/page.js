@@ -30,12 +30,14 @@ function LearningPageContent() {
     }
   }, [initialCompetencyFilter]);
 
+  const targetUserId = searchParams.get('userId') || 'USR001';
+
   // Fetch all learning, recommendation, and competency data in parallel
   useEffect(() => {
     Promise.all([
-      fetch('/api/igot/learner?userId=USR001').then(r => r.json()).catch(() => ({ enrollments: [] })),
-      fetch('/api/recommendations?userId=USR001').then(r => r.json()).catch(() => ({ igot: [], nssta: [] })),
-      fetch('/api/competencies?userId=USR001').then(r => r.json()).catch(() => null)
+      fetch(`/api/igot/learner?userId=${targetUserId}`).then(r => r.json()).catch(() => ({ enrollments: [] })),
+      fetch(`/api/recommendations?userId=${targetUserId}`).then(r => r.json()).catch(() => ({ igot: [], nssta: [] })),
+      fetch(`/api/competencies?userId=${targetUserId}`).then(r => r.json()).catch(() => null)
     ])
       .then(([learnerData, recData, compData]) => {
         setEnrollments(learnerData.enrollments || []);

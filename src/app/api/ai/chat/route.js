@@ -3,7 +3,8 @@ import { getGeminiAIService } from '@/services/GeminiAIService';
 
 export async function POST(request) {
   try {
-    const { messages, userContext } = await request.json();
+    const body = await request.json();
+    const { messages, userContext = {}, userId } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -12,8 +13,14 @@ export async function POST(request) {
       );
     }
 
+    const resolvedUserId = userId || userContext.userId || userContext.id || 'USR001';
+    const enrichedContext = {
+      ...userContext,
+      userId: resolvedUserId
+    };
+
     const aiService = getGeminiAIService();
-    const result = await aiService.chatWithCopilot(messages, userContext || {});
+    const result = await aiService.chatWithCopilot(messages, enrichedContext);
 
     return NextResponse.json(result);
   } catch (error) {

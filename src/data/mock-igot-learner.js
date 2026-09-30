@@ -49,13 +49,13 @@ export const mockLearnerData = {
         assessmentScore: 92
       },
       {
-        courseId: "igot-crs-008",
+        courseId: "igot-crs-003",
         enrolledAt: "2026-02-01",
         progress: 100,
         status: "completed",
         lastAccessedAt: "2026-03-20",
         completedAt: "2026-03-20",
-        certificateUrl: "/certificates/survey-design.pdf",
+        certificateUrl: "/certificates/ai-governance.pdf",
         assessmentScore: 95
       },
       {
